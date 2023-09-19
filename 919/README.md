@@ -58,16 +58,16 @@
  5. 해석된 .class파일을 Runtime Data Area에 배치하고 실행 & GC 수행
 
 - Class Loader(컴파일러 역할 : loading, linking, initialization)
- - .class파일을 Load하고 오브젝트 코드들을 Linking
- - Runtime시 동적으로 클래스 Load(클래스 선언이 아닌 클래스가 처음으로 참조될때 클래스를 로드 & 링크)
- - Runtime Data Area에 .class 파일 Initialization
- - 사용하지 않는 클래스 삭제  
+  - .class파일을 Load하고 오브젝트 코드들을 Linking
+  - Runtime시 동적으로 클래스 Load(클래스 선언이 아닌 클래스가 처음으로 참조될때 클래스를 로드 & 링크)
+  - Runtime Data Area에 .class 파일 Initialization
+  - 사용하지 않는 클래스 삭제  
 
 - Execution Engine(Interpreter, JIT Compiler, GC)
- - class를 실행시키는 역할
- - class 파일을 명령어 단위로 읽어서 수행(Interpreter)
- - 자주 사용하는 코드는 Native Code로 변환 & 캐싱(JIT Compiler)
- - GC
+  - class를 실행시키는 역할
+  - class 파일을 명령어 단위로 읽어서 수행(Interpreter)
+  - 자주 사용하는 코드는 Native Code로 변환 & 캐싱(JIT Compiler)
+  - GC
 
 - Runtime Data Area : 프로그램을 수행하기 위해 OS에서 할당받은 메모리 공간
   [참고사이트](https://inpa.tistory.com/entry/JAVA-%E2%98%95-%EA%B7%B8%EB%A6%BC%EC%9C%BC%EB%A1%9C-%EB%B3%B4%EB%8A%94-%EC%9E%90%EB%B0%94-%EC%BD%94%EB%93%9C%EC%9D%98-%EB%A9%94%EB%AA%A8%EB%A6%AC-%EC%98%81%EC%97%AD%EC%8A%A4%ED%83%9D-%ED%9E%99)
