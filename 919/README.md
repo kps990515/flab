@@ -134,3 +134,23 @@
         4. Remark : Concurrent Mark 과정에서 GC의 대상이라고 판단된 지역 메모리에서 해제하고 Available/Unused 로 변경합니다. Stop-the-World 발생.
         5. Clean up : 살아남은 객체가 가장 적은 지역의 미사용 객체를 제거합니다.  Stop-the-World 발생.
         6. Copy : Clean up 과정에서 완전히 비워지지 않은 지역의 살아남은 객체들을 Available/Unused 지역으로 복사하여 Compaction을 수행합니다.  Stop-the-World 발생.
+  6. [Z GC](https://d2.naver.com/helloworld/0128759) : JDK 15버전에서사용, 조금 더 큰 메모리에서 효율적으로 GC(8mb ~ 16TB)
+      - Z pages라는 G1 GC의 Region과 비슷한 개념 사용
+      - page는 2의 배수의 크기로 동적으로 생성, 삭제 가능
+      - colored pointer를 사용해 64bit 메모리에서 Mark 진행
+        1. Finalizable : finalizer을 통해서만 참조되는 Object로 garbage로 보시면 됩니다
+        2. Remapped : 재배치 여부를 판단하는 Mark
+        3. Marked 1 : Live Object
+        4. Marked 0 : Live Object
+      - Load barriers 사용해 STW없이 동시적으로 재배치 진행(Remap mark, Relocation set 활용)
+        1. Remap bit 1 이면 참조 주소 리턴
+        2. bit 0이고 Relocation Set(garbage가 있는 z page)에 있다면 Remap bit를 1로 변환하고 주소 리턴
+        3. Relocation Set에 있다면 참조주소를 새로운 주소로 업데이트하고 주소 리턴
+        4. Relocation Set에 없다면 object를 재배치하고 새로운 주소 리턴
+      - 실행순서
+        1. Pause Mark Start : ZGC의 Root에서 가리키는 객체 Mark 표시 (Live Object) > STW
+        2. Concurrent Mark/Remap : 객체의 참조를 탐색하며 모든 객체에 Mark를 표시 한다(필요없는 객체 coloring)
+        3. Pause Mark End : 새롭게 들어온 객체들의 대해서 Mark를 표시한다 > STW
+        4. Concurrent Pereare for Reloc : 재배치 하려는 z page를 찾아 RelocationSet에 배치한다
+        5. Pause Relocate Start : 모든 루트참조의 재배치를 진행하고 업데이트한다 > STW
+        6. Concurrent Relocate : 이후 Load barriers를 사용하여 모든 객체를 재배치 및 참조를 수정한다
