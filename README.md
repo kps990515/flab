@@ -8,3 +8,5 @@
 ### [Persistence Context](https://github.com/kps990515/flab/tree/master/persistence)
 ### [Entity Mapping](https://github.com/kps990515/flab/tree/master/entity_mapping)
 ### [relative Mapping](https://github.com/kps990515/flab/tree/master/relative_mapping)
+### [extend Mapping](https://github.com/kps990515/flab/tree/master/extend_mapping)
+### [proxy](https://github.com/kps990515/flab/tree/master/proxy)
