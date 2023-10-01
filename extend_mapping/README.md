@@ -48,4 +48,21 @@ public class Movie extends Item{
    - 조회, 검색 불가
    - 추상클래스로 사용할 것을 권장
 
+```java
+@MappedSuperclass
+public abstract class BaseEntity {
+​
+   private String createdBy;
+​
+   private LocalDateTime createdDate;
+​
+   private String lastModifiedBy;
+​
+   private LocalDateTime lastModifiedDate;
+}
 
+@Entity
+public class Member extends BaseEntity {
+  ...
+}
+```
