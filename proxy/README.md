@@ -25,3 +25,66 @@
    - 강제초기화 : Hibernate.initialize(entity)
 
 ### 즉시로딩, 지연로딩
+ - 지연로딩
+```java
+// Member와 Team은 연결되어있지만 Member만 조회하고 싶은경우
+public class Member{
+   @ManyToOne(fetch = FetchType.LAZY)
+   @JoinColumn(name = "TEAM_ID")
+   private Team team;
+}
+
+Team team = member.getTeam() // 실제 team을 사용하는 시점에 초기화
+```
+
+ - 즉시로딩
+```java
+public class Member{
+   @ManyToOne(fetch = FetchType.EAGER)
+   @JoinColumn(name = "TEAM_ID")
+   private Team team;
+}
+```
+
+ - 즉시로딩 주의(지연로딩만 사용하자)
+   - 가급적 지연로딩만 사용
+   - 즉시로딩 적용하면 예상하지 못한 SQL 발생
+   - 즉시로딩은 JPQL에서 N+1 문제 발생
+   - @ManyToOne, @OneToOne는 기본이 즉시로딩(LAZY로 변경해야함)
+   - @OneToMany, @ManyToMany는 기본이 지연로딩
+
+### 영속성 전이 : CASCADE
+ - 특정 엔티티를 영속상태로 만들때 연관된 엔티티도 함께 하고 싶을때
+ - 부모 엔티티 저장시 자식엔티티도
+ - 영속성 전이는 연관관계랑 관련없음
+ - 종류 : ALL, PERSIST, REMOVE, MERGE...
+
+```java
+public class Parent{
+   @OneToMany(MappedBy = "parent", cascade = CascadeType.ALL)
+   private List<Child> childList = new ArrayList<>();
+}
+```
+
+### 고아객체
+ - 부모엔티티와 연관관계가 끊어진 자식 엔티티를 자동으로 삭제
+ - orpahnRemoval = true로 설정
+ - 참조하는곳이 하나일때만 사용
+ - 특정엔티티가 개인소유할때 사용
+ - @OneToOne, @OneToMany만 가능
+
+ ```java
+public class Parent{
+   @OneToMany(MappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval=true)
+   private List<Child> childList = new ArrayList<>();
+}
+
+ Parent parent1 = em.find(Parent.class, id);
+ parent1.getChildren().remove(0) // -> child테이블에서도 삭제
+ ```
+
+### 영속성 전이 + 고아객체, 생명주기
+ - CascadeType.ALL + orphanRemoval = true
+ - 스스로 생명주기 관리하는 엔티티(Parent)에서 em.persist(), em.remove 사용
+ - 부모 엔티티를 통해 자식의 생명주기 관리 가능
+ - DDD의 Aggregate Root개념 구현 가능
