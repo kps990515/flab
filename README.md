@@ -11,3 +11,4 @@
 ### [extend Mapping](https://github.com/kps990515/flab/tree/master/extend_mapping)
 ### [proxy](https://github.com/kps990515/flab/tree/master/proxy)
 ### [valueType](https://github.com/kps990515/flab/tree/master/value_type)
+### [JPQL](https://github.com/kps990515/flab/tree/master/jpql)

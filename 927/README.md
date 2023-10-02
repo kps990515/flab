@@ -114,3 +114,31 @@ System.out.println("member = " + member);
     - pool에 미리 connection이 생성되어 있기 때문에 connection을 생성하는 데 드는 요정 마다 연결 시간이 소비되지 않는다.
     - 커넥션을 계속해서 재사용하기 때문에 생성되는 커넥션 수를 제한적으로 설정함
 
+### Context Switching
+ - 현재 진행하고 있는 Task(Process, Thread)의 상태를 저장하고 다음 진행할 Task의 상태 값을 읽어 적용하는 과정
+ - 과정
+    1. Task의 대부분 정보는 Register에 저장되고 PCB(Process Control Block)로 관리
+    2. 현재 실행하고 있는 Task의 PCB 정보를 저장
+    3. 다음 실행할 Task의 PCB 정보를 읽어 Register에 적재하고 CPU가 이전에 진행했던 과정을 연속적으로 수행
+ - 코스트
+    1. Cache 초기화
+    2. Memory Mapping 초기화
+    3. Context Switching비용은 Process(전체변경) > Thread(stack만 변경)
+
+### 자바 8
+    1. Optional : null처리를 간편하게 하기 위해
+    2. interface Default Method : 하위호환성 위해, 인터페이스에 변경이 일어나면 사용하는 곳에서 모두 구현필요
+    3. LocalDate, LocalDateTime, LocalTime    
+        - Calender, Date클래스의 문제점
+            - 불변 객체가 아니라 수정위험이 있다
+            - 상수필드 남용(Calender.SECOND)
+            - 혼란주는 월 지정(Calendar.OCTOBER) -> 실질저장값은 9
+            - 일관성 없는 요일 상수
+            - Date, Calender의 역할분담
+    4. Parallel Sort :  병렬정렬    
+    5. StringJoiner :  순차적으로 나열되는 문자열에 특정문자열 넣을때 사용(ㅇㅇㅇ, ㅠㅠㅠ, ㄹㄹㄹ)
+    6. 람다 : 익명클래스 사용시 가독성 향상
+        - Functional Interface : 하나의 메소드만 선언되어있는 인터페이스    
+    7. Stream : 연속된 정보 처리에 사용    
+    8. 메소드참조 : ClassName::NEW
+
