@@ -1,0 +1,9 @@
+# JPA
+### [JPA 기초](https://github.com/kps990515/flab/tree/master/jpa/jpa_first)
+### [Persistence Context](https://github.com/kps990515/flab/tree/master/jpa/persistence)
+### [Entity Mapping](https://github.com/kps990515/flab/tree/master/jpa/entity_mapping)
+### [relative Mapping](https://github.com/kps990515/flab/tree/master/jpa/relative_mapping)
+### [extend Mapping](https://github.com/kps990515/flab/tree/master/jpa/extend_mapping)
+### [proxy](https://github.com/kps990515/flab/tree/master/jpa/proxy)
+### [valueType](https://github.com/kps990515/flab/tree/master/jpa/value_type)
+### [JPQL](https://github.com/kps990515/flab/tree/master/jpa/jpql)
