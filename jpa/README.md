@@ -7,3 +7,4 @@
 ### [proxy](https://github.com/kps990515/flab/tree/master/jpa/proxy)
 ### [valueType](https://github.com/kps990515/flab/tree/master/jpa/value_type)
 ### 10/4 [JPQL](https://github.com/kps990515/flab/tree/master/jpa/jpql)
+### 10/4 [JPQL2](https://github.com/kps990515/flab/tree/master/jpa/jpq2)
