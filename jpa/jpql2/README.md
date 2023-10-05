@@ -68,3 +68,33 @@ where t.name = 'A'
  - 페치조인과 일반조인의 차이
     - 일반조인은 연관된 엔티티 정보를 조회하지 않음(join key값만 비교)
     - 페치조인은 연관된 엔티티 정보도 조회
+
+ - 페치조인의 특징과 한계
+   - 페치 조인 대상에는 별칭을 줄 수 없다
+   - 둘 이상의 컬렉션은 페치 조인할 수 없다
+   - 컬렉션을 페치조인하면 페이징 API를 사용할 수 없다
+
+### @NamedQuery
+ - 쿼리에 이름 부여
+ - 정적 쿼리
+ - 애플리케이션 로딩시점에 초기화 후 재사용
+ - 애플리케이션 로딩시점에 쿼리 검증
+ ```java
+ @NameQuery(
+   name = "Member.findByUserName"
+   query = "select ..."
+ )
+
+ em.createQuery("Member.findByUserName", Member.class)
+ ```
+
+### 벌크연산(대량 변경)
+ - 쿼리한번으로 여러테이블 로우 변경
+ - executeUpdate()의 결과는 영향받은 엔티티 수 반환
+ - 영속성 컨텍스트를 무시하고 DB에 직접 쿼리
+ - 해결법 : 벌크연산 먼저 처리하고 영속성 컨텍스트 초기화
+
+ ```java
+ int cnt = em.createQuery("update Member m set m.age = 20")
+               .executeUpdate();
+ ```
