@@ -1,0 +1,1 @@
+https://velog.io/@sontulip/how-to-db-design#%EB%8F%88%EC%97%90-%EA%B4%80%ED%95%98%EC%97%AC
