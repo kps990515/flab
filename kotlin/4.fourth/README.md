@@ -338,8 +338,8 @@ println(value) // 출력: 2
 val numbers = listOf(1, 2, 3, 4, 5)
 val result = numbers.map { it * 2 }.any { it > 5 }
 
-al numbers = listOf(1, 2, 3, 4, 5)
-val result = numbers.map { it * 2 }.any { it > 5 }
+val numbers = listOf(1, 2, 3, 4, 5)
+val result = numbers.asSequence().map { it * 2 }.any { it > 5 }
 ```
 
 ### 꼬리재귀
