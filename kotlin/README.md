@@ -4,4 +4,4 @@
 ### [Third](https://github.com/kps990515/flab/tree/master/kotlin/3.third)
 ### [Fourth](https://github.com/kps990515/flab/tree/master/kotlin/4.fourth)
 ### [Fifth](https://github.com/kps990515/flab/tree/master/kotlin/5.fifth)
-### [Sixth](https://github.com/kps990515/flab/tree/master/kotlin/5.sixth)
+### [Sixth](https://github.com/kps990515/flab/tree/master/kotlin/6.sixth)
