@@ -155,13 +155,34 @@ class Dog : Animal() {
 }
 
 fun main() {
-    val animal: Animal = Dog() // 업캐스트 발생
+    val animal: Animal = Dog() // 업캐스트 발생 Dog -> Animal
     animal.eat() // Animal 클래스의 메서드 호출
     // animal.bark() // 컴파일 에러! Animal 클래스에는 bark() 메서드가 없음
 
     // 다시 다운캐스트하여 하위 클래스의 메서드 호출
     val dog = animal as Dog
     dog.bark()
+}
+```
+
+### 다운캐스트
+ - 상위 클래스의 인스턴스를 하위 클래스 타입으로 변환하는 것
+ - is연산자를 사용해 캐스티 가능한지 먼저 확인 & as로 형변환(스마트 캐스트)
+
+```kotlin
+open class Animal
+class Dog : Animal()
+
+fun main() {
+    val animal: Animal = Dog() // 상위 형식의 참조에 하위 형식의 인스턴스를 할당
+
+    // 다운캐스트 Animal -> dog
+    if (animal is Dog) {
+        val dog: Dog = animal as Dog
+        println("다운캐스트 성공: $dog")
+    } else {
+        println("다운캐스트 실패")
+    }
 }
 ```
 
@@ -229,10 +250,167 @@ fun main() {
 }
 ```
 
+### 클래스 위임
+ - 기존 클래스의 일부 또는 모든 기능을 새로운 클래스에 위임하여 코드 재사용성을 높이는 메커니즘
+ - by사용
+ - 위임받을 클래스를 파라미터로 받아야함
 
+```kotlin
+interface Engine {
+    fun start()
+    fun stop()
+}
 
+// Engine인터페이스 구현한 클래스
+class ElectricEngine : Engine { 
+    override fun start() {
+        println("Electric engine started")
+    }
 
+    override fun stop() {
+        println("Electric engine stopped")
+    }
+}
 
+// 이렇게 사용하려면 파라미터로 Engine을 구현한 클래스 필요
+class Car(engine: Engine) : Engine by engine {
+    // 이 클래스는 Engine 인터페이스를 구현하지 않지만,
+    // ElectricEngine에 위임하여 Engine의 메서드들을 사용할 수 있음
+}
 
+fun main() {
+    val electricEngine = ElectricEngine()
+    val car = Car(electricEngine)
 
+    car.start() // Electric engine started
+    car.stop()  // Electric engine stopped
+}
+
+``` 
+
+### Sealed Class
+ - 제한된 하위 클래스 : 상속한 하위 클래스는 반드시 같은 패키지와 모듈 안에 있어야 한다
+ - 패턴매칭 : when 식에서 모든 하위 클래스에 대한 처리를 명시적으로 지정할 수 있습니다.
+ - 사용이유
+   - 제한된 서브 타입 : HTTP 응답에 대한 서브타입을 제한하기 위해 하위 클래스 생성
+   - 패턴매칭을 통한 안정성 : when을 통해 패턴을 확인하고 코드안정성 확보
+   - 상태 또는 이벤트 종류 클래스 정의 : 캐릭터 상태, 이벤트 종류
+   - 비즈니스 로직 모델링 : 주문 상태값 등
+
+```kotlin
+sealed class Result {
+    data class Success(val data: String) : Result() // 하위 클래스
+    data class Error(val message: String) : Result() // 하위 클래스
+}
+
+// when 문
+fun handleResult(result: Result) {
+    when (result) {
+        is Result.Success -> println("Success: ${result.data}")
+        is Result.Error -> println("Error: ${result.message}")
+    }
+}
+
+fun main() {
+    val successResult = Result.Success("Hello, World!")
+    val errorResult = Result.Error("Something went wrong")
+
+    handleResult(successResult) // Success: Hello, World!
+    handleResult(errorResult)   // Error: Something went wrong
+}
+```
+
+### Object
+ 1. Sigleton 객체
+  - object 키워드를 사용하여 클래스를 정의하면 해당 클래스는 싱글톤 객체 생성
+```kotlin
+object Singleton {
+  fun doSomething() {
+      println("Doing something")
+  }
+}
+
+fun main() {
+  Singleton.doSomething() // 출력: Doing something
+}
+```
+ 2. 동반 객체 (Companion Object)
+  - 클래스의 인스턴스 없이 해당 클래스에 속한 메서드나 속성을 호출가능케 함
+```kotlin
+class MyClass {
+    companion object {
+        fun companionFunction() {
+            println("Companion function")
+        }
+    }
+}
+
+fun main() {
+    MyClass.companionFunction() // 출력: Companion function
+}
+```
+ 3. 익명 객체 (Anonymous Object)
+  - 인터페이스나 추상 클래스를 구현하는 익명 객체를 생성가능
+```kotlin
+interface MyInterface {
+    fun doSomething()
+}
+
+fun main() {
+    val myObject = object : MyInterface {
+        override fun doSomething() {
+            println("Doing something in anonymous object")
+        }
+    }
+
+    myObject.doSomething() // 출력: Doing something in anonymous object
+}
+```
+
+### Nested VS Inner Class
+ - 둘다 다른 외부클래스 내부에 클래스로 존재
+ - 내부 클래스는 외부 클래스의 인스턴스에 종속적이며, inner 키워드를 사용하여 정의
+ - 내포된 클래스는 외부 클래스의 인스턴스에 대한 참조를 가지지 않으며, 독립적으로 생성
+
+ 1. 내포된 클래스
+ ```kotlin
+ class OuterClass {
+    private val outerValue: Int = 10
+
+    class NestedClass {
+        fun printStaticValue() {
+            println("Static value")
+        }
+    }
+}
+
+fun main() {
+    val nested = OuterClass.NestedClass()
+    nested.printStaticValue() // 출력: Static value
+}
+ ```
+
+ 2. 내부 클래스
+ - inner 키워드를 붙인다
+ - this@Label 표기법 : 내부 외부 클래스를 명시적으로 구분할때 사용
+```kotlin
+class OuterClass {
+    val name: String = "OuterClass"
+
+    inner class InnerClass {
+        val name: String = "InnerClass"
+
+        fun printNames() {
+            println(this@OuterClass.name) // 외부 클래스의 name에 접근
+            println(this@InnerClass.name) // 내부 클래스의 name에 접근
+        }
+    }
+}
+
+fun main() {
+    val outer = OuterClass()
+    val inner = outer.InnerClass()
+    inner.printNames()
+}
+```
 
