@@ -9,9 +9,9 @@
 
 - 주체
     1. 리소스 소유자 또는 사용자
-     - 구글, 페이스북, 나
+        - 구글, 페이스북, 나
     2. 인증 서버
-     - 리소스 소유자를 인증하고 Client에게 액세스 토큰 발급
+        - 리소스 소유자를 인증하고 Client에게 액세스 토큰 발급
     3. 리소스 서버 : 구글, 페이스북 서버
     4. Client(Application) : 우리의 서비스
 
@@ -26,6 +26,7 @@
      - 기본으로 쓰이는 방식(간편 로그인)
      - Client가 사용자 대신 특정 자원 접근 요청
      - Refresh Token 사용가능
+
     ![img](https://postfiles.pstatic.net/MjAyMzAyMDNfMTA5/MDAxNjc1Mzg2ODIyMTk2.p2TqHr3sSdI5wcVsE01Hn95R-LpblY6qk1-TJ8dmz2cg.opYLjtRDwQu1F4-9SwreEr_df0fc-b1bgCZo2iyZRTIg.JPEG.mds_datasecurity/000.jpg?type=w966)
 
-    
+
