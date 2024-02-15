@@ -31,15 +31,18 @@
 |ConnectionDate|DATE|연결 날짜|
 
 ### 로그인
-URL : /user/signin
-Method : POST
+ - URL : /user/signin
+ - Method : POST
 
-request payload
+ - request payload
 ```json
-    "signinMethod": "kakao" //naver, google, email
+{
+  "signinMethod": "kakao" //naver, google, email
+}
+    
 ```
 
-response payload
+ - response payload
 ```json
 {
     "result": "success" //fail
@@ -48,10 +51,10 @@ response payload
 ```
 
 #### 이메일로그인의 경우
-URL : /user/signin/email
-Method : POST
+ - URL : /user/signin/email
+ - Method : POST
 
-request payload
+ - request payload
 ```json
 {
     "id": "userId",
@@ -59,7 +62,7 @@ request payload
 }
 ```
 
-response payload
+ - response payload
 ```json
 {
     "result": "success" //fail
@@ -67,15 +70,15 @@ response payload
 ```
 
 ### 로그아웃
-URL : /user/logout
-Method : POST
+ - URL : /user/logout
+ - Method : POST
 
-request payload
+ - request payload
 ```json
-   {}
+{}
 ```
 
-response payload
+ - response payload
 ```json
 {
     "result": "success" //fail
@@ -83,17 +86,17 @@ response payload
 ```
 
 ### 프로필조회, 수정
-URL : /user/profile
-Method : POST
+ - URL : /user/profile
+ - Method : POST
 
-request payload
+ - request payload
 ```json
 {
   "method": "S"
 }
 ```
 
-response payload
+ - response payload
 ```json
 {
   "id": "userId",
@@ -118,10 +121,10 @@ response payload
 ```
 
 ### 프로필수정반영
-URL : /user/profile
-Method : POST
+ - URL : /user/profile
+ - Method : POST
 
-request payload
+ - request payload
 ```json
 {
   "method": "U",
@@ -133,7 +136,7 @@ request payload
 }
 ```
 
-response payload
+ - response payload
 ```json
 {
   "result": "success" //fail
