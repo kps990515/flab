@@ -43,7 +43,6 @@
 ### 상품예약가능여부 테이블
 |Column|Type|Description|
 |------|------|------------|
-|AvailabilityID|UUID|예약가능여부 ID|
 |ProductID|UUID|상품 고유 ID|
 |Date|DATE|예약 가능한 날짜
 |Status|VARCHAR(50)|예약 가능 상태|
@@ -145,21 +144,162 @@
  - response payload
 ```json
 {
+  "id": "productId",
+  "name": "투어 상품 이름",
+  "category": "가이드투어",
+  "city": "파리",
+  "price": 43000,
+  "rating": 4.95,
+  "ratingCount": 275,
+  "imageUrl": "상품 이미지 URL",
+  "minimumNumber": 1,
+  "maximumNumber": 20,
+  "trasportation": "도보",
+  "language": "한국어",
+  "productOwner": "(주)데이트립",
+  "imageList": [
+    {
+      "imageId": "23155423",
+      "imageUrl": "www.",
+      "order": 1
+    },
+    // 다른이미지들...
+  ],
+  "descriptionList": [
+    {
+      "descriptionId": 23125,
+      "descriptionName": "코스소개",
+      "htmlContentUrl" : "www...",
+      "Order": 1,
+    },
+     // 다른설명글들...
+  ]
+}  
+```
+
+#### 상품상세조회(예약가능날짜조회)
+ - URL : /product/{productId}/availableDate
+ - Method : GET
+
+ - request payload
+```json
+{
+  "productId" : "34662",
+  "date": "20230102" //하루단건조회 없으면 전체날짜 조회
+}   
+```
+
+ - response payload
+```json
+{
+  "dateList": [
+    {
+      "date": "20230101",
+      "status": "Available",
+      "quantityAvailable" : 10,
+    },
+     // 다른날짜들...
+  ]
+}  
+```
+
+#### 상품상세조회(후기조회)
+ - URL : /product/{productId}/reviews
+ - Method : GET
+
+ - request payload
+```json
+{
+  "productId" : "34662"
+}   
+```
+
+ - response payload
+```json
+{
   "currentPage": 1,
   "totalPages": 10,
   "limit": 10,
-  "products": [
+  "reviewList": [
     {
-      "id": "productId",
-      "name": "투어 상품 이름",
-      "category": "가이드투어",
-      "city": "파리",
-      "price": 43000,
-      "rating": 4.95,
-      "ratingCount": 275,
-      "imageUrl": "상품 이미지 URL",
+      "reviewId": "2353",
+      "userId": 1234,
+      "score": 3.5,
+      "review": "리뷰내용",
+      "imageUrl": "www....",
+      "updatedDateTime": "20230101"
     },
-    // 기타 상품들...
+    // 기타 리뷰들...
   ]
+}  
+```
+
+### 상품등록
+ - URL : /product/enroll
+ - Method : POST
+
+ - request payload
+```json
+{
+  "name": "투어 상품 이름",
+  "category": "가이드투어",
+  "city": "파리",
+  "price": 43000,
+  "minimumNumber": 1,
+  "maximumNumber": 20,
+  "trasportation": "도보",
+  "language": "한국어",
+  "productOwner": "(주)데이트립"
+}   
+```
+
+ - response payload
+```json
+{
+  "result": "success",
+  "productId": 12345
+}  
+```
+
+#### 상품등록(이미지)
+ - URL : /product/enroll/images
+ - Method : POST
+ - request: multipar/formdata
+
+ - response payload
+```json
+{
+  "result": "success",
+  "imageList": [
+    {
+      "imageId": "2353",
+      "imageUrl": "www.",
+      "order": 1,
+    },
+    // 기타 이미지들...
+  ]
+}  
+```
+
+### 후기등록
+ - URL : /product/{productId}/enrollReview
+ - Method : GET
+
+ - request payload
+```json
+{
+  "productId" : "34662",
+  "score": 3.5,
+  "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+  "review": "리뷰내용"
+}   
+```
+
+ - response payload
+```json
+{
+  "result": "success",
+  "reviewId" : 1233,
+  "imageUrl": "www..."
 }  
 ```
