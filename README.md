@@ -13,6 +13,8 @@
  - git전략, merge종류, kotlin null, 함수형 프로그래밍, 빈 라이프사이클, 빈스코프
 ### [2/11](https://github.com/kps990515/flab/tree/master/0211) 
  - oauth, spring/java변천사, sync/async/blocking..., db간 장단점, shading, kafka
+### [2/18](https://github.com/kps990515/flab/tree/master/0218)
+ - Sealed class, filter interceptor aop, DB acid isolation, apply with let also run
 ### [JPA](https://github.com/kps990515/flab/tree/master/jpa)
 ### [KOTLIN](https://github.com/kps990515/flab/tree/master/kotlin)
 ### [Algorithm](https://github.com/kps990515/flab/tree/master/algorithm)

@@ -105,7 +105,7 @@
     - 출시년도: 2013년
     - 주요 변경 사항:
         - Java 8 지원 (람다 표현식, 스트림 API 활용 가능).
-        - 스프링 부트 1.0 등장.
+        - 스프링 부트 1.0 등장(2014.4)
 
  - Spring Framework 4.3: HTTP/2, 스프링부트와 통합
     - 출시년도: 2016년
@@ -121,6 +121,20 @@
         - 리액티브 프로그래밍 지원.
         - 새로운 spring-webflux 모듈 도입.
         - Kotlin 지원.
+        - 스프링부트 2.0(2018.3)
+        - 스프링부트 2.1(2018.10) : Java 11지원
+        - 스프링부트 2.2(2019.10) : 지연 초기화, Junit 5
+        - 스플이부트 2.7(2022.5) : 네이티브 컴파일
+
+ - Spring Framework 6.x:
+    - 출시년도: 2022년
+    - 주요 변경 사항:
+        - Java 17 이상만 지원.
+        - 네이티브 컴파일 지원
+        - Jakarta EE 지원
+        - AOT(Ahead-of-Time) 컴파일
+            - 코드를 실행하기 전 네이티브 기계어로 컴파일 먼저 진행
+            - 시작시간 감소, 메모리 사용량 감소, 전체 실행 속도 향상(미리 다 컴파일)      
 
 ### [자바 버전]
 
@@ -136,27 +150,61 @@
     - Try-with-Resources: 자동으로 리소스를 닫아주는 try-with-resources 문 추가.
     - 문자열 스위치: 문자열을 이용한 switch 문 추가. 
 
- - JDK 1.8
+ - JDK 1.8(LTS)
     - 람다 표현식: 함수형 프로그래밍 지원을 위한 람다 표현식 도입.
     - 스트림 API: 데이터 처리를 위한 스트림 API 추가.
     - 메서드 참조(Method Reference): 메서드 참조를 통한 코드 간결성 제공.
     - 인터페이스의 디폴트 및 정적 메서드: 인터페이스에 디폴트 및 정적 메서드를 정의할 수 있게 됨.    
+    - 날짜 및 시간 API
+    - Metaspace 도입(기존 Heap내부 PermGen영역 => Native내부의 Metaspace)
+
+ - Java 9
+    - G1 GC 도입   
+    - Epsilon GC 도입
+ 
+ - Java 11(LTS)
+    - HTTP/2 및 WebSocket을 지원하는 새로운 HTTP 클라이언트
+    - Z 가비지 수집기(ZGC) 
+
+ - Java 12
+    - Shenandoah GC 도입
 
  - Java SE 17 (LTS) 
-    - LTS(Long-Term Support) 버전: Java의 LTS 버전 중 하나로서 장기적인 지원을 받을 수 있게 됨.
     - Sealed Classes: 클래스와 인터페이스의 사용 범위를 명시적으로 지정할 수 있는 Sealed Classes 도입.
+
+ - Java 21(LTS)
+    - 가상 스레드 제공
+    - Sequenced Collections 제공
+    - switch case null 검사제공
 
 ###[Blocking, Non-blocking, Sync, Async](https://jh-7.tistory.com/25)
 
 - 목적 : CPU의 효율적 사용, 성능향상
 
 - 제어권
-    - Blocking : 호출된 함수 또는 작업에게 제어권이 넘어가 결과값+제어권 반환될 때까지 대기하는 방식
-    - Non-Blocking : 호출된 함수 또는 작업에게 제어권을 줬지만 실행중이라는 결과값+제어권 반환됨
+    - Blocking : 호출된 함수가 작업을 완료할 때까지 호출자를 대기시키는 방식
+    - Non-Blocking : 호출된 함수가 즉시 반환되어 호출자가 다른 작업을 계속할 수 있게 하는 방식
 
 - 시간
-    - Sync : 각 작업을 동시에 시작해, 동시에 끝나게 하는 방식(작업중에 다른 작업 시작불가)
-    - Async : 각 작업을 독립적으로 실행하고 결과를 기다리지 않는 방식
+    - Sync :  작업들이 순차적으로 이루어지는 것을 의미합니다. 한 작업이 끝나야만 다음 작업이 시작
+    - Async : 한 작업의 완료 여부와 상관없이 다른 작업이 시작될 수 있음
+
+- Sync-blocking
+    - 해당 작업이 완료될 때까지 다른 작업을 수행하지 못함
+
+- Async-Blocking
+    - 사용되지 않음
+
+- Sync-NonBlocking
+   - 호출된 작업이 즉시 반환
+   - 호출자는 반환된 결과를 기반으로 즉시 다음 작업을 진행
+   - 호출된 작업이 완료되면 callback후 작업완료
+   - 작업 자체는 동기적으로 처리
+
+- Async-NonBlocking
+   - 비동기 프로그래밍 모델
+   - 호출된 작업이 즉시 반환
+   - 작업의 완료 여부와 상관없이 다음 작업으로 넘어감
 
     ![img](https://haneepark.github.io/images/blocing-nonblocking-sync-async.png)
 
