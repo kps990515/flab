@@ -171,6 +171,8 @@
 
  - Java SE 17 (LTS) 
     - Sealed Classes: 클래스와 인터페이스의 사용 범위를 명시적으로 지정할 수 있는 Sealed Classes 도입.
+    - switch문 패턴일치 : 값 반환 할당가능, break제거, -> 표현식
+    - 외부함수, 메모리 API사용 : 외부 메모리 액세스 및 외부 함수 호출 가능(JVM 외부)
 
  - Java 21(LTS)
     - 가상 스레드 제공
