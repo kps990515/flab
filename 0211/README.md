@@ -179,7 +179,7 @@
     - Sequenced Collections 제공
     - switch case null 검사제공
 
-###[Blocking, Non-blocking, Sync, Async](https://jh-7.tistory.com/25)
+### [Blocking, Non-blocking, Sync, Async](https://jh-7.tistory.com/25)
 
 - 목적 : CPU의 효율적 사용, 성능향상
 
