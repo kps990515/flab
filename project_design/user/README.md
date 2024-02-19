@@ -3,7 +3,7 @@
 ### 유저 테이블
 |Column|Type|Description|
 |------|------|------------|
-|ID|UUID|사용자 고유 ID|
+|User_Id|UUID|사용자 고유 ID|
 |Name|VARCHAR(255)|사용자 이름|
 |Email|VARCHAR(255)|사용자 이메일|
 |Password|VARCHAR(255)|해시된 비밀번호
@@ -14,7 +14,8 @@
 ### 마케팅 동의 테이블
 |Column|Type|Description|
 |------|------|------------|
-|ID|UUID|사용자 고유 ID|
+|Marketing_Agree_Id|UUID|마케팅 동의 고유 ID|
+|User_Id|UUID|사용자 고유 ID|
 |EmailMarketingConsent|BOOLEAN|이메일 마케팅 동의 여부
 |EmailMarketingConsentLastModifedDate|DATE|이메일 최종 수정 날짜
 |SmsMarketingConsent|BOOLEAN|SMS 마케팅 동의 여부
@@ -25,7 +26,7 @@
 ### SNS연결 테이블
 |Column|Type|Description|
 |------|------|------------|
-|ID|UUID|사용자 고유 ID|
+|User_Id|UUID|사용자 고유 ID|
 |SnsProvider|VARCHAR(255)|SNS 서비스 제공자|
 |Connection|BOOLEAN|연결 여부|
 |ConnectionDate|DATE|연결 날짜|
