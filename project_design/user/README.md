@@ -1,38 +1,38 @@
 ## 유저
 
 ### 유저 테이블
-|Column|Type|Description|
-|------|------|------------|
-|User_Id|UUID|사용자 고유 ID|
-|Name|VARCHAR(255)|사용자 이름|
-|Email|VARCHAR(255)|사용자 이메일|
-|Password|VARCHAR(255)|해시된 비밀번호
-|PhoneNumber|VARCHAR(255)|사용자 전화번호
-|JoinedDate|DATE|사용자 가입 날짜
-|LastModifiedDate|DATE|최종 수정 날짜
-
-### 마케팅 동의 테이블
-|Column|Type|Description|
-|------|------|------------|
-|Marketing_Agree_Id|UUID|마케팅 동의 고유 ID|
-|User_Id|UUID|사용자 고유 ID|
-|EmailMarketingConsent|BOOLEAN|이메일 마케팅 동의 여부
-|EmailMarketingConsentLastModifedDate|DATE|이메일 최종 수정 날짜
-|SmsMarketingConsent|BOOLEAN|SMS 마케팅 동의 여부
-|SmsMarketingConsentLastModifedDate|DATE|이메일 최종 수정 날짜
-|PushMarketingConsent|BOOLEAN|푸시 알림 동의 여부
-|PushMarketingConsentLastModifedDate|DATE|이메일 최종 수정 날짜
+```sql
+CREATE TABLE Users (
+    UserId VARCHAR(255) PRIMARY KEY,
+    Name VARCHAR(255) NOT NULL,
+    Email VARCHAR(255) NOT NULL UNIQUE,
+    Password VARCHAR(255) NOT NULL,
+    PhoneNumber VARCHAR(255),
+    JoinedDate DATE NOT NULL,
+    EmailMarketingConsent BOOLEAN NOT NULL,
+    EmailMarketingConsentLastModifiedAt DATE,
+    SmsMarketingConsent BOOLEAN NOT NULL,
+    SmsMarketingConsentLastModifiedAt DATE,
+    PushMarketingConsent BOOLEAN NOT NULL,
+    PushMarketingConsentLastModifiedAt DATE,
+    CreatedAt TIMESTAMP  NOT NULL,
+    ModifiedAt TIMESTAMP  NOT NULL
+);
+```
 
 ### SNS연결 테이블
-|Column|Type|Description|
-|------|------|------------|
-|User_Id|UUID|사용자 고유 ID|
-|SnsProvider|VARCHAR(255)|SNS 서비스 제공자|
-|Connection|BOOLEAN|연결 여부|
-|ConnectionDate|DATE|연결 날짜|
+```sql
+CREATE TABLE SnsConnected (
+    UserId VARCHAR(255) PRIMARY KEY,
+    SnsProvider VARCHAR(255) NOT NULL,
+    Connection BOOLEAN NOT NULL,
+    CreatedAt TIMESTAMP  NOT NULL,
+    ModifiedAt TIMESTAMP  NOT NULL
+);
+```
 
 ### 로그인
- - URL : /user/signin
+ - URL : /users/signin
  - Method : POST
 
  - request payload
@@ -52,7 +52,7 @@
 ```
 
 #### 이메일로그인의 경우
- - URL : /user/signin/email
+ - URL : /users/signin/email
  - Method : POST
 
  - request payload
@@ -71,7 +71,7 @@
 ```
 
 ### 로그아웃
- - URL : /user/logout
+ - URL : /users/logout
  - Method : POST
 
  - request payload
@@ -87,8 +87,8 @@
 ```
 
 ### 프로필조회, 수정
- - URL : /user/profile
- - Method : POST
+ - URL : /users/profiles
+ - Method : GET
 
  - request payload
 ```json
@@ -122,7 +122,7 @@
 ```
 
 ### 프로필수정반영
- - URL : /user/profile
+ - URL : /users/profiles
  - Method : POST
 
  - request payload

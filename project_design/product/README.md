@@ -1,68 +1,92 @@
 ## 상품
 
 ### 상품기본 테이블
-|Column|Type|Description|
-|------|------|------------|
-|ProductID|UUID|상품 고유 ID|
-|Name|VARCHAR(255)|상품 이름|
-|Category|VARCHAR(10)|상품 카테고리|
-|City|VARCHAR(255)|도시|
-|Price|INT|상품 가격|
-|ImageUrl|TEXT|상품 이미지 URL|
-|AverageScore|DECIMAL(1,1)|평균 후기 점수|
-|CreatedDateTime|TIMESTAMP|상품 생성 날짜|
-|UpdatedDateTime|TIMESTAMP|상품 정보 갱신 날짜|
+```sql
+CREATE TABLE Products (
+    ProductID VARCHAR(255) PRIMARY KEY,
+    Name VARCHAR(255) NOT NULL,
+    Category VARCHAR(10) NOT NULL,
+    City VARCHAR(255) NOT NULL,
+    Price INT NOT NULL,
+    ImageUrl TEXT,
+    AverageScore DECIMAL(2, 1),
+    CreatedAt TIMESTAMP NOT NULL,
+    ModifiedAt TIMESTAMP NOT NULL
+);
+```
+
 
 ### 상품상세 테이블
-|Column|Type|Description|
-|------|------|------------|
-|ProductID|UUID|상품 고유 ID|
-|MinimumNumber|INT|최소 출발 인원|
-|MaximumNumber|INT|최대 출발 인원|
-|Transportation|VARCHAR(20)|이동수단|
-|Language|VARCHAR(20)|언어|
-|ProductOwner|VARCHAR(255)|상품등록자이름|
+```sql
+CREATE TABLE ProductDetails (
+    ProductDetailID VARCHAR(255) PRIMARY KEY,
+    ProductID VARCHAR(255) NOT NULL UNIQUE,
+    MinimumNumber INT NOT NULL,
+    MaximumNumber INT NOT NULL,
+    Transportation VARCHAR(20) NOT NULL,
+    Language VARCHAR(20) NOT NULL,
+    ProductOwner VARCHAR(255) NOT NULL,
+    CreatedAt TIMESTAMP NOT NULL,
+    ModifiedAt TIMESTAMP NOT NULL
+);
+```
 
 ### 상품 이미지 테이블
-|Column|Type|Description|
-|------|------|------------|
-|ImageID|UUID|이미지 ID|
-|ProductID|UUID|상품 고유 ID|
-|ImageURL|TEXT|이미지 URL|
-|Order|INT|이미지 표시 순서|
+```sql
+CREATE TABLE ProductImages  (
+    ImageID VARCHAR(255) PRIMARY KEY,
+    ProductDetailID VARCHAR(255) NOT NULL,
+    ImageURL TEXT NOT NULL,
+    ImageOrder INT NOT NULL,
+    CreatedAt TIMESTAMP NOT NULL,
+    ModifiedAt TIMESTAMP NOT NULL
+);
+```
 
 ### 상품 설명글 테이블
-|Column|Type|Description|
-|------|------|------------|
-|DescriptionID|UUID|설명글 ID|
-|ProductID|UUID|상품 고유 ID|
-|DescriptionName|상품 설명 제목(상품정보, 코스, 이용안내)|
-|HtmlContentURL|TEXT|HTML 형식의 설명 URL|
-|Order|INT|상품설명글 순서|
+```sql
+CREATE TABLE ProductDescriptions   (
+    DescriptionID VARCHAR(255) PRIMARY KEY,
+    ProductDetailID VARCHAR(255) NOT NULL ,
+    DescriptionName VARCHAR(255) NOT NULL,
+    HtmlContentURL TEXT NOT NULL,
+    DescriptionOrder INT NOT NULL,
+    CreatedAt TIMESTAMP NOT NULL,
+    ModifiedAt TIMESTAMP NOT NULL
+);
+```
 
 ### 상품예약가능여부 테이블
-|Column|Type|Description|
-|------|------|------------|
-|ProductID|UUID|상품 고유 ID|
-|Date|DATE|예약 가능한 날짜
-|Status|VARCHAR(50)|예약 가능 상태|
-|QuantityAvailable|INT|해당 날짜에 사용 가능한 예약 수량|
+```sql
+CREATE TABLE ProductAvailability    (
+    ProductID VARCHAR(255) PRIMARY KEY
+    ProductDetailID VARCHAR(255) NOT NULL UNIQUE,
+    Date DATE NOT NULL,
+    Status VARCHAR(50) NOT NULL,
+    QuantityAvailable INT NOT NULL,
+    CreatedAt TIMESTAMP NOT NULL,
+    ModifiedAt TIMESTAMP NOT NULL
+);
+```
 
 ### 상품후기 테이블
 |Column|Type|Description|
-|------|------|------------|
-|ReviewID|UUID|후기 ID|
-|ProductID|UUID|상품 고유 ID|
-|UserID|UUID|고객 고유 ID|
-|Score|INT|후기 점수|
-|Review|TEXT|후기|
-|ImageURL|TEXT|후기 이미지 URL|
-|CreatedDateTime|TIMESTAMP|후기 생성 날짜|
-|UpdatedDateTime|TIMESTAMP|후기 갱신 날짜|
-
+```sql
+CREATE TABLE ProductAvailability    (
+    ReviewID VARCHAR(255) PRIMARY KEY
+    ProductID VARCHAR(255) NOT NULL,
+    ProductDetailID VARCHAR(255) NOT NULL,
+    UserID VARCHAR(255) NOT NULL
+    Score INT NOT NULL,
+    Review TEXT NOT NULL,
+    ImageURL TEXT,
+    CreatedAt TIMESTAMP NOT NULL,
+    ModifiedAt TIMESTAMP NOT NULL
+);
+```
 
 ### 메인상품조회(인기상품 배치로 미리저장 후 노출)
- - URL : /product
+ - URL : /products/main
  - Method : GET
 
  - request payload
@@ -93,7 +117,7 @@
 ```
 
 ### 도시상품조회
- - URL : /product/city/{city}
+ - URL : /products/citys/{city}
  - Method : GET
 
  - request payload
@@ -131,7 +155,7 @@
 ```
 
 ### 상품상세조회
- - URL : /product/{productId}
+ - URL : /products/detail/{productId}
  - Method : GET
 
  - request payload
@@ -178,7 +202,7 @@
 ```
 
 #### 상품상세조회(예약가능날짜조회)
- - URL : /product/{productId}/availableDate
+ - URL : /products/detail/{productId}/availableDates
  - Method : GET
 
  - request payload
@@ -204,7 +228,7 @@
 ```
 
 #### 상품상세조회(후기조회)
- - URL : /product/{productId}/reviews
+ - URL : /products/detail/{productId}/reviews
  - Method : GET
 
  - request payload
@@ -234,8 +258,31 @@
 }  
 ```
 
+### 후기등록
+ - URL : /products/detail/{productId}/Reviews
+ - Method : POST
+
+ - request payload
+```json
+{
+  "productId" : "34662",
+  "score": 3.5,
+  "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+  "review": "리뷰내용"
+}   
+```
+
+ - response payload
+```json
+{
+  "result": "success",
+  "reviewId" : 1233,
+  "imageUrl": "www..."
+}  
+```
+
 ### 상품등록
- - URL : /product/enroll
+ - URL : /products
  - Method : POST
 
  - request payload
@@ -262,7 +309,7 @@
 ```
 
 #### 상품등록(이미지)
- - URL : /product/enroll/images
+ - URL : /products/images
  - Method : POST
  - request: multipar/formdata
 
@@ -281,25 +328,3 @@
 }  
 ```
 
-### 후기등록
- - URL : /product/{productId}/enrollReview
- - Method : GET
-
- - request payload
-```json
-{
-  "productId" : "34662",
-  "score": 3.5,
-  "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
-  "review": "리뷰내용"
-}   
-```
-
- - response payload
-```json
-{
-  "result": "success",
-  "reviewId" : 1233,
-  "imageUrl": "www..."
-}  
-```
