@@ -87,20 +87,6 @@ public non-sealed class Kia implements CarBrand {}
  - 지속성(Durability)
    - 트랜잭션이 성공적으로 커밋되면, 그 결과가 시스템 고장이 발생하더라도 영구적으로 반영되어야 함을 의미
 
-### [DB isolation Level](https://mangkyu.tistory.com/299)
-- SERIALIZABLE
-   - 가장 높은 격리 수준
-   - 다른 트랜잭션과의 완전한 격리를 보장(순차 실행)
-   - Select에도 Lock걸림
-
-- REPEATABLE READ
-   - 변경 전의 데이터 백업(dirty read, non-reapeatable read 방지)
-   - 변경은 백업하지만 추가는 백업하지 않음(phantom read는 방지 어려움)
-   - 동일한 트랜잭션에서는 read 후 데이터변경되었더라도 같은 데이터 read가능
-   - dirty read : 타 트랜잭션의 수정 이후 commit이전 데이터를 읽는 경우
-   - non-repeatable read : read 와 read사이에 다른트랜잭션이 commit해서 다른 데이터가 보이는 경우
-   - phantom read : 조회 트랜잭션 끝나기 전에 다른 데이터가 들어와 추가행이 발견되는 경우
-
 ### 코틀린 스코프 함수
 - apply
    - 호출 객체를 반환합니다.

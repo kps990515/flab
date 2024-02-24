@@ -14,7 +14,9 @@
 ### [2/11](https://github.com/kps990515/flab/tree/master/0211) 
  - oauth, spring/java변천사, sync/async/blocking..., db간 장단점, shading, kafka
 ### [2/18](https://github.com/kps990515/flab/tree/master/0218)
- - Sealed class, filter interceptor aop, DB acid isolation, apply with let also run
+ - Sealed class, apply with let also run, DB acid
+### [2/25](https://github.com/kps990515/flab/tree/master/0225)
+ - filter interceptor, isolation level, transaction, lock
 ### [JPA](https://github.com/kps990515/flab/tree/master/jpa)
 ### [KOTLIN](https://github.com/kps990515/flab/tree/master/kotlin)
 ### [Algorithm](https://github.com/kps990515/flab/tree/master/algorithm)
