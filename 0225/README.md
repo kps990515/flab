@@ -69,25 +69,25 @@
 
 ### Mysql Lock의 종류
 - 레코드락
- - 테이블 레코드를 잠그는 락
- - Mysql에서는 DML이 발생하면 인덱스의 레코드를 잠금
+   - 테이블 레코드를 잠그는 락
+   - Mysql에서는 DML이 발생하면 인덱스의 레코드를 잠금
 
 - 갭락
- - 레코드와 레코드사이의 간격을 잠금
- - 실제 레코드를 제외하고 데이터가 추가될 수 있는 인덱스 범위(위아래)에 락
- - 유일성 보장되는 PK, UK 인덱스 작업에서는 갭 락이 사용되지 않는다
+   - 레코드와 레코드사이의 간격을 잠금
+   - 실제 레코드를 제외하고 데이터가 추가될 수 있는 인덱스 범위(위아래)에 락
+   - 유일성 보장되는 PK, UK 인덱스 작업에서는 갭 락이 사용되지 않는다
 ```sql
 //J로 시작하는 이름 수정시
 SELECT * FROM member WHERE last_name LIKE "J%" FOR UPDATE;         // 쓰기 잠금(베타락)
 SELECT * FROM member WHERE last_name LIKE "J%" LOCK IN SHARE MODE; // 읽기 잠금(공유락)
 ```
 - 넥스트키락
- - 레코드락 + 갭락
+    - 레코드락 + 갭락
 
 - Auto Increment Lock
- - 동시에 여러개 INSERT 되더라도 순차적으로 증가하는 번호를 제공하기 위해 내부적으로 테이블 수준의 잠금
- - 새로운 데이터 저장하는 쿼리에서만 사용
- - 트랜잭션 실패해도 증가한 숫자는 줄어들지 않음
+    - 동시에 여러개 INSERT 되더라도 순차적으로 증가하는 번호를 제공하기 위해 내부적으로 테이블 수준의 잠금
+    - 새로운 데이터 저장하는 쿼리에서만 사용
+    - 트랜잭션 실패해도 증가한 숫자는 줄어들지 않음
 
 ### [JPA 락](https://hudi.blog/jpa-concurrency-control-optimistic-lock-and-pessimistic-lock/)
 - Isolation과 JPA 동시성 제어의 차이
@@ -95,7 +95,7 @@ SELECT * FROM member WHERE last_name LIKE "J%" LOCK IN SHARE MODE; // 읽기 잠
    - Isolation : 트랜잭션 동안에 일관된 데이터 read를 위해 사용
 
 - Optimisitc Lock : 데이터 갱신 시, 충돌이 발생하지 않을 것이라고 낙관적으로 가정(어플리케이션 단)
- - @Version : 엔티티를 조회한 시점의 버전과 수정한 시점의 버전이 일치하지 않으면 예외
+    - @Version : 엔티티를 조회한 시점의 버전과 수정한 시점의 버전이 일치하지 않으면 예외
  ```sql
 @Entity
 public class Board {
