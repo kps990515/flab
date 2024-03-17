@@ -38,6 +38,10 @@
 |REPEATABLE READ|없음|없음|발생|
 |SERIALIZABLE|없음|없음|없음|
 
+- dirty read : Commit되지 않은 데이터를 타 트랜잭션이 읽는 경우
+- non-repeatable read : 같은 조회를 두번했을 때 데이터가 다른경우(타 트랜잭션이 데이터 수정+커밋해서)
+- phantom read : 같은 조회를 두번했을 때 데이터가 다른경우(타 트랜잭션이 데이터 삽입+커밋해서)
+
 - SERIALIZABLE 
    - 정의 : - 다른 트랜잭션과의 완전한 격리를 보장(순차 실행)
    - 가장 높은 격리 수준
@@ -48,9 +52,7 @@
    - 변경 전 데이터 백업(dirty read, non-reapeatable read 방지)
    - 변경은 백업하지만 추가는 백업하지 않음(phantom read는 방지 어려움)
    - 동일한 트랜잭션에서는 read 후 데이터변경되었더라도 변경 전 데이터 read가능
-   - dirty read : 타 트랜잭션의 수정 <-> commit 사이에 있는 데이터를 읽는 경우
-   - non-repeatable read : read 와 read사이에 다른트랜잭션이 commit해서 다른 데이터가 보이는 경우
-   - phantom read : 조회 트랜잭션 끝나기 전에 다른 데이터가 들어와 추가행이 발견되는 경우
+
 
 - READ COMMITTED(ORACLE)
    - 정의 : Commit된 데이터 조회 가능
@@ -73,7 +75,7 @@
    - Mysql에서는 DML이 발생하면 인덱스의 레코드를 잠금
 
 - 갭락
-   - 레코드와 레코드사이의 간격을 잠금
+   - 레코드와 레코드사이의 비어있는 간격을 잠금
    - 실제 레코드를 제외하고 데이터가 추가될 수 있는 인덱스 범위(위아래)에 락
    - 유일성 보장되는 PK, UK 인덱스 작업에서는 갭 락이 사용되지 않는다
 ```sql
@@ -81,7 +83,7 @@
 SELECT * FROM member WHERE last_name LIKE "J%" FOR UPDATE;         // 쓰기 잠금(베타락)
 SELECT * FROM member WHERE last_name LIKE "J%" LOCK IN SHARE MODE; // 읽기 잠금(공유락)
 ```
-- 넥스트키락
+- Next Key Lock
     - 레코드락 + 갭락
 
 - Auto Increment Lock
