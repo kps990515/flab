@@ -18,7 +18,7 @@
 ### [2/25](https://github.com/kps990515/flab/tree/master/0225)
  - filter interceptor, isolation level, transaction, lock
 ### [3/17](https://github.com/kps990515/flab/tree/master/0317)
- - filter interceptor, isolation level, transaction, lock 
+ - JPA N+1, JPA OSIV, @Transactional, inno DB
 ### [JPA](https://github.com/kps990515/flab/tree/master/jpa)
 ### [KOTLIN](https://github.com/kps990515/flab/tree/master/kotlin)
 ### [Algorithm](https://github.com/kps990515/flab/tree/master/algorithm)
