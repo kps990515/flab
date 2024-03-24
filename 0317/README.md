@@ -31,7 +31,7 @@
 ![img](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcMbAvr%2FbtskAFH5ptJ%2FLO3VQqpaNc5kTpIYnifOd1%2Fimg.png)
    - 트랜잭션 종료 시 영속성 컨텍스트 종료, DB 커넥션 반환
    - 장점 : 커넥션 리소스 절약
-   - 단점 : 모든 지연로딩을 커넥션안에서만 처리가능
+   - 단점 : 모든 지연로딩을 커넥션안에서만 처리가능, View에서 예기치못한 수정발생할 수 있음
 
 ### [@Transactional](https://medium.com/gdgsongdo/transactional-%EB%B0%94%EB%A5%B4%EA%B2%8C-%EC%95%8C%EA%B3%A0-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-7b0105eb5ed6)
  - 어노테이션이 적용된 범위 안에서 데이터베이스 작업이 전부 성공하면 커밋하고, 하나라도 실패하면 롤백하는 방식으로 작동
