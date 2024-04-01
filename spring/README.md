@@ -9,3 +9,4 @@
 ### [AOP](https://github.com/kps990515/flab/tree/master/spring/8.aop)
 ### [API추상화](https://github.com/kps990515/flab/tree/master/spring/9.abstract)
 ### [인증](https://github.com/kps990515/flab/tree/master/spring/10.certification)
+### [프로젝트세팅](https://github.com/kps990515/flab/tree/master/spring/11.setting)
