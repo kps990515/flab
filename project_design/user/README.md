@@ -35,6 +35,11 @@ CREATE TABLE SnsConnected (
  - URL : /users/signin
  - Method : POST
 
+**Request**
+| 이름          | 타입     | 설명                                                                                       | 필수 |
+|---------------|----------|------------------------------------------------------------------------------------------|------|
+| signinMethod  | String   | 로그인 방법 ('kakao', 'naver', 'google', 'email'). 사용자는 이 중 하나를 선택하여 제공해야 함. | O    |
+
  - request payload
 ```json
 {
@@ -42,6 +47,11 @@ CREATE TABLE SnsConnected (
 }
     
 ```
+
+**Response**
+| 이름     | 타입     | 설명                           | 필수 |
+|----------|----------|------------------------------|------|
+| result   | String   | 작업 결과 ('success' 또는 'fail') | O    |
 
  - response payload
 ```json
