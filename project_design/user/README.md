@@ -65,6 +65,12 @@ CREATE TABLE SnsConnected (
  - URL : /users/signin/email
  - Method : POST
 
+**Request**
+| 이름         | 타입     | 설명         | 필수 |
+|--------------|----------|------------|------|
+| id           | String   | 사용자 ID     | O    |
+| encPassword  | String   | 암호화된 비밀번호 | O    |
+
  - request payload
 ```json
 {
@@ -72,6 +78,11 @@ CREATE TABLE SnsConnected (
     "encPassword": "a342kclx23154"    
 }
 ```
+
+**Response**
+| 이름     | 타입     | 설명                           | 필수 |
+|----------|----------|------------------------------|------|
+| result   | String   | 작업 결과 ('success' 또는 'fail') | O    |
 
  - response payload
 ```json
@@ -84,10 +95,17 @@ CREATE TABLE SnsConnected (
  - URL : /users/logout
  - Method : POST
 
+**Request:** 없음
+
  - request payload
 ```json
 {}
 ```
+
+**Response**
+| 이름     | 타입     | 설명                           | 필수 |
+|----------|----------|------------------------------|------|
+| result   | String   | 작업 결과 ('success' 또는 'fail') | O    |
 
  - response payload
 ```json
@@ -100,12 +118,36 @@ CREATE TABLE SnsConnected (
  - URL : /users/profiles
  - Method : GET
 
+**조회 Request**
+| 이름    | 타입    | 설명  | 필수 |
+|---------|---------|-----------------------|------|
+| method  | String  | 'S'는 조회, 'U'는 수정 | O    |
+
  - request payload
 ```json
 {
   "method": "S"
 }
 ```
+
+**조회 Response**  
+| 이름    | 타입    | 설명  | 필수 |
+|---------|---------|--------------|------|
+|id       | String   | 사용자 ID          | O     |
+|name       | String   | 사용자 이름       | O     |
+|email       | String   | 사용자 이메일     | O     |
+|snsConnection | Object   | SNS 연결 상태 정보 | O    |
+|kakao | boolean   | kakao SNS 연결 상태 정보 |  O   |
+|naver | boolean   | naver SNS 연결 상태 정보 |  O   |
+|google | boolean   | google SNS 연결 상태 정보 | O    |
+|marketingPreferences | Object   | 마케팅수신동의 상태 정보 |  O   |
+|email | boolean   | email 마케팅수신동의 상태 정보 | O    |
+|sms | boolean   | 문자 마케팅수신동의 상태 정보 | O    |
+|pushNotification | boolean   | 앱푸시 마케팅수신동의 상태 정보 | O    |
+|lastModifiedDate | String   | 최종프로필 수정일 | O    |
+|joinedDate | String   | 가입일 | O    |
+|point | Bigdecimal   | 소유 포인트 | O    |
+|coupon | int   | 소유 쿠폰 수 | O    |
 
  - response payload
 ```json
@@ -134,6 +176,22 @@ CREATE TABLE SnsConnected (
 ### 프로필수정반영
  - URL : /users/profiles
  - Method : POST
+ - 수정할 컬럼만 request에 입력
+
+**request** 
+| 이름            | 타입     | 설명                         | 필수 |
+|-----------------|----------|----------------------------|------|
+| method          | String   | 'U'로 수정 작업 지정            | O    |
+|name       | String   | 사용자 이름       |      |
+|email       | String   | 사용자 이메일     |     |
+|snsConnection | Object   | SNS 연결 상태 정보 |     |
+|kakao | boolean   | kakao SNS 연결 상태 정보 |    |
+|naver | boolean   | naver SNS 연결 상태 정보 |    |
+|google | boolean   | google SNS 연결 상태 정보 |    |
+|marketingPreferences | Object   | 마케팅수신동의 상태 정보 |     |
+|email | boolean   | email 마케팅수신동의 상태 정보 |    |
+|sms | boolean   | 문자 마케팅수신동의 상태 정보 |    |
+|pushNotification | boolean   | 앱푸시 마케팅수신동의 상태 정보 |    |
 
  - request payload
 ```json
@@ -146,6 +204,11 @@ CREATE TABLE SnsConnected (
   }
 }
 ```
+
+**Response for Updating**
+| 이름     | 타입     | 설명                           | 필수 |
+|----------|----------|------------------------------|------|
+| result   | String   | 작업 결과 ('success' 또는 'fail') | O    |
 
  - response payload
 ```json
