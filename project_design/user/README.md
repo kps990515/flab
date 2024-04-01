@@ -31,7 +31,7 @@ CREATE TABLE SnsConnected (
 );
 ```
 
-### 로그인
+### 1. 로그인
  - URL : /users/signin
  - Method : POST
 
@@ -61,7 +61,7 @@ CREATE TABLE SnsConnected (
     
 ```
 
-#### 이메일로그인의 경우
+#### 2. 이메일로그인의 경우
  - URL : /users/signin/email
  - Method : POST
 
@@ -91,7 +91,7 @@ CREATE TABLE SnsConnected (
 }
 ```
 
-### 로그아웃
+### 3. 로그아웃
  - URL : /users/logout
  - Method : POST
 
@@ -114,7 +114,7 @@ CREATE TABLE SnsConnected (
 }
 ```
 
-### 프로필조회, 수정
+### 4. 프로필조회, 수정
  - URL : /users/profiles
  - Method : GET
 
@@ -173,7 +173,7 @@ CREATE TABLE SnsConnected (
 }
 ```
 
-### 프로필수정반영
+### 5. 프로필수정반영
  - URL : /users/profiles
  - Method : POST
  - 수정할 컬럼만 request에 입력
@@ -205,7 +205,7 @@ CREATE TABLE SnsConnected (
 }
 ```
 
-**Response for Updating**
+**Response**
 | 이름     | 타입     | 설명                           | 필수 |
 |----------|----------|------------------------------|------|
 | result   | String   | 작업 결과 ('success' 또는 'fail') | O    |
