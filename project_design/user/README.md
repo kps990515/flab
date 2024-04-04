@@ -92,7 +92,7 @@ CREATE TABLE SnsConnected (
 ```
 
 ### 3. 로그아웃
- - URL : /users/logout
+ - URL : /users/singout
  - Method : POST
 
 **Request:** 없음
@@ -115,7 +115,7 @@ CREATE TABLE SnsConnected (
 ```
 
 ### 4. 프로필조회, 수정
- - URL : /users/profiles
+ - URL : /users/me
  - Method : GET
 
 **조회 Request**
@@ -136,16 +136,16 @@ CREATE TABLE SnsConnected (
 |id       | String   | 사용자 ID          | O     |
 |name       | String   | 사용자 이름       | O     |
 |email       | String   | 사용자 이메일     | O     |
-|snsConnection | Object   | SNS 연결 상태 정보 | O    |
-|kakao | boolean   | kakao SNS 연결 상태 정보 |  O   |
-|naver | boolean   | naver SNS 연결 상태 정보 |  O   |
-|google | boolean   | google SNS 연결 상태 정보 | O    |
-|marketingPreferences | Object   | 마케팅수신동의 상태 정보 |  O   |
-|email | boolean   | email 마케팅수신동의 상태 정보 | O    |
-|sms | boolean   | 문자 마케팅수신동의 상태 정보 | O    |
-|pushNotification | boolean   | 앱푸시 마케팅수신동의 상태 정보 | O    |
-|lastModifiedDate | String   | 최종프로필 수정일 | O    |
-|joinedDate | String   | 가입일 | O    |
+|sns_connection | Object   | SNS 연결 상태 정보 | O    |
+|               |kakao | boolean   | kakao SNS 연결 상태 정보 |  O   |
+|               |naver | boolean   | naver SNS 연결 상태 정보 |  O   |
+|               |google | boolean   | google SNS 연결 상태 정보 | O    |
+|marketing_preferences | Object   | 마케팅수신동의 상태 정보 |  O   |
+|                      |email | boolean   | email 마케팅수신동의 상태 정보 | O    |
+|                      |sms | boolean   | 문자 마케팅수신동의 상태 정보 | O    |
+|                      |push_notification | boolean   | 앱푸시 마케팅수신동의 상태 정보 | O    |
+|last_modified_at | String   | 최종프로필 수정일 | O    |
+|joined_at | String   | 가입일 | O    |
 |point | Bigdecimal   | 소유 포인트 | O    |
 |coupon | int   | 소유 쿠폰 수 | O    |
 
@@ -174,8 +174,8 @@ CREATE TABLE SnsConnected (
 ```
 
 ### 5. 프로필수정반영
- - URL : /users/profiles
- - Method : POST
+ - URL : /users/me
+ - Method : PATCH
  - 수정할 컬럼만 request에 입력
 
 **request** 
@@ -185,13 +185,13 @@ CREATE TABLE SnsConnected (
 |name       | String   | 사용자 이름       |      |
 |email       | String   | 사용자 이메일     |     |
 |snsConnection | Object   | SNS 연결 상태 정보 |     |
-|kakao | boolean   | kakao SNS 연결 상태 정보 |    |
-|naver | boolean   | naver SNS 연결 상태 정보 |    |
-|google | boolean   | google SNS 연결 상태 정보 |    |
+|              |kakao | boolean   | kakao SNS 연결 상태 정보 |    |
+|              |naver | boolean   | naver SNS 연결 상태 정보 |    |
+|              |google | boolean   | google SNS 연결 상태 정보 |    |
 |marketingPreferences | Object   | 마케팅수신동의 상태 정보 |     |
-|email | boolean   | email 마케팅수신동의 상태 정보 |    |
-|sms | boolean   | 문자 마케팅수신동의 상태 정보 |    |
-|pushNotification | boolean   | 앱푸시 마케팅수신동의 상태 정보 |    |
+|                     |email | boolean   | email 마케팅수신동의 상태 정보 |    |
+|                     |sms | boolean   | 문자 마케팅수신동의 상태 정보 |    |
+|                     |pushNotification | boolean   | 앱푸시 마케팅수신동의 상태 정보 |    |
 
  - request payload
 ```json
