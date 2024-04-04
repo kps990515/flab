@@ -3,31 +3,32 @@
 ### 유저 테이블
 ```sql
 CREATE TABLE Users (
-    UserId VARCHAR(255) PRIMARY KEY,
-    Name VARCHAR(255) NOT NULL,
-    Email VARCHAR(255) NOT NULL UNIQUE,
-    Password VARCHAR(255) NOT NULL,
-    PhoneNumber VARCHAR(255),
-    JoinedDate DATE NOT NULL,
-    EmailMarketingConsent BOOLEAN NOT NULL,
-    EmailMarketingConsentLastModifiedAt DATE,
-    SmsMarketingConsent BOOLEAN NOT NULL,
-    SmsMarketingConsentLastModifiedAt DATE,
-    PushMarketingConsent BOOLEAN NOT NULL,
-    PushMarketingConsentLastModifiedAt DATE,
-    CreatedAt TIMESTAMP  NOT NULL,
-    ModifiedAt TIMESTAMP  NOT NULL
+    user_id VARCHAR(255) PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    phone_number VARCHAR(255),
+    joined_date DATE NOT NULL,
+    email_marketing_consent BOOLEAN NOT NULL,
+    email_marketing_consent_last_modifed_at DATE,
+    sms_marketing_consent BOOLEAN NOT NULL,
+    sms_marketing_consent_last_modifed_at DATE,
+    push_marketing_consent BOOLEAN NOT NULL,
+    push_marketing_consent_last_modifed_at DATE,
+    created_at TIMESTAMP  NOT NULL,
+    modified_at TIMESTAMP  NOT NULL
 );
 ```
 
 ### SNS연결 테이블
 ```sql
 CREATE TABLE SnsConnected (
-    UserId VARCHAR(255) PRIMARY KEY,
-    SnsProvider VARCHAR(255) NOT NULL,
-    Connection BOOLEAN NOT NULL,
-    CreatedAt TIMESTAMP  NOT NULL,
-    ModifiedAt TIMESTAMP  NOT NULL
+    user_id VARCHAR(255) PRIMARY KEY,
+    kakao_connect BOOLEAN NOT NULL,
+    naver_connect BOOLEAN NOT NULL
+    google_connect BOOLEAN NOT NULL
+    created_at TIMESTAMP  NOT NULL,
+    modified_at TIMESTAMP  NOT NULL
 );
 ```
 
@@ -118,15 +119,11 @@ CREATE TABLE SnsConnected (
  - URL : /users/me
  - Method : GET
 
-**조회 Request**
-| 이름    | 타입    | 설명  | 필수 |
-|---------|---------|-----------------------|------|
-| method  | String  | 'S'는 조회, 'U'는 수정 | O    |
+**조회 Request** : 없음
 
  - request payload
 ```json
 {
-  "method": "S"
 }
 ```
 
@@ -136,16 +133,16 @@ CREATE TABLE SnsConnected (
 |id       | String   | 사용자 ID          | O     |
 |name       | String   | 사용자 이름       | O     |
 |email       | String   | 사용자 이메일     | O     |
-|sns_connection | Object   | SNS 연결 상태 정보 | O    |
+|snsConnection |    | SNS 연결 상태 정보 | O    |
 |               |kakao | boolean   | kakao SNS 연결 상태 정보 |  O   |
 |               |naver | boolean   | naver SNS 연결 상태 정보 |  O   |
 |               |google | boolean   | google SNS 연결 상태 정보 | O    |
-|marketing_preferences | Object   | 마케팅수신동의 상태 정보 |  O   |
+|marketingPreferences |    | 마케팅수신동의 상태 정보 |  O   |
 |                      |email | boolean   | email 마케팅수신동의 상태 정보 | O    |
 |                      |sms | boolean   | 문자 마케팅수신동의 상태 정보 | O    |
 |                      |push_notification | boolean   | 앱푸시 마케팅수신동의 상태 정보 | O    |
-|last_modified_at | String   | 최종프로필 수정일 | O    |
-|joined_at | String   | 가입일 | O    |
+|lastModifiedAt | String   | 최종프로필 수정일 | O    |
+|joinedDate | String   | 가입일 | O    |
 |point | Bigdecimal   | 소유 포인트 | O    |
 |coupon | int   | 소유 쿠폰 수 | O    |
 
@@ -181,14 +178,13 @@ CREATE TABLE SnsConnected (
 **request** 
 | 이름            | 타입     | 설명                         | 필수 |
 |-----------------|----------|----------------------------|------|
-| method          | String   | 'U'로 수정 작업 지정            | O    |
 |name       | String   | 사용자 이름       |      |
 |email       | String   | 사용자 이메일     |     |
-|snsConnection | Object   | SNS 연결 상태 정보 |     |
+|snsConnection |    | SNS 연결 상태 정보 |     |
 |              |kakao | boolean   | kakao SNS 연결 상태 정보 |    |
 |              |naver | boolean   | naver SNS 연결 상태 정보 |    |
 |              |google | boolean   | google SNS 연결 상태 정보 |    |
-|marketingPreferences | Object   | 마케팅수신동의 상태 정보 |     |
+|marketingPreferences |    | 마케팅수신동의 상태 정보 |     |
 |                     |email | boolean   | email 마케팅수신동의 상태 정보 |    |
 |                     |sms | boolean   | 문자 마케팅수신동의 상태 정보 |    |
 |                     |pushNotification | boolean   | 앱푸시 마케팅수신동의 상태 정보 |    |

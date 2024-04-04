@@ -3,24 +3,24 @@
 ###  포인트 테이블
 ```sql
 CREATE TABLE Point (
-    UserID VARCHAR(255) PRIMARY KEY,
-    Balance INT NOT NULL
-    CreatedAt TIMESTAMP  NOT NULL,
-    ModifiedAt TIMESTAMP  NOT NULL
+    user_id VARCHAR(255) PRIMARY KEY,
+    balance_ BIGDECIMAL NOT NULL
+    create_at TIMESTAMP  NOT NULL,
+    modified_at TIMESTAMP  NOT NULL
 );
 ```
 
 ###  포인트 적립,이용내역 테이블
 ```sql
 CREATE TABLE PointTransaction (
-    TransactionId VARCHAR(255) PRIMARY KEY
-    UserID VARCHAR(255) PRIMARY KEY,
-    Point INT NOT NULL,
-    TransactionType VARCHAR(5) NOT NULL,
-    TransactionAt TIMESTAMP NOT NULL,
-    Description TEXT,
-    CreatedAt TIMESTAMP  NOT NULL,
-    ModifiedAt TIMESTAMP  NOT NULL
+    transaction_id VARCHAR(255) PRIMARY KEY
+    user_id VARCHAR(255) PRIMARY KEY,
+    point INT NOT NULL,
+    transaction_type VARCHAR(5) NOT NULL,
+    transaction_at TIMESTAMP NOT NULL,
+    description TEXT,
+    created_at TIMESTAMP  NOT NULL,
+    modifed_at TIMESTAMP  NOT NULL
 );
 ```
 
@@ -28,12 +28,19 @@ CREATE TABLE PointTransaction (
  - URL : /points/balance
  - Method : GET
 
+**Request:** 없음
+
  - request payload
 ```json
 {
 }
     
 ```
+
+**Response**
+| 이름     | 타입     | 설명                           | 필수 |
+|----------|----------|------------------------------|------|
+| balance   | BigDecimal  | 포인트 잔고               |  O  |
 
  - response payload
 ```json
@@ -46,6 +53,13 @@ CREATE TABLE PointTransaction (
  - URL : /points/transactions
  - Method : GET
 
+**request** 
+| 이름            | 타입     | 설명                         | 필수 |
+|-----------------|----------|----------------------------|------|
+|startDate       | String   | 조회시작일자       |      |
+|endDate         | String   | 조회종료일자       |     |
+|transactionType | String   | 조회종류(U:이용 A:적립 없으면 전체조회)|     |
+
  - request payload
 ```json
 {
@@ -55,6 +69,19 @@ CREATE TABLE PointTransaction (
 }
     
 ```
+
+**response** 
+| 이름            | 타입     | 설명                         | 필수 |
+|-----------------|----------|----------------------------|------|
+|currentPage | int   | 현재 페이지    |  O  |
+|totalPages  | int   | 전체 페이지    |  O  |
+|limit       | int   | 한 페이지 내역 개수 |  O  |
+|transaction |       | 내역 VO |  O  |
+|              |transactionId | String   | 내역 ID |  O  |
+|              |transactionType | String   | 내역 종류(이용 or 적립)  |  O  |
+|              |point | BigDecimal   | 이용, 적립 포인트 |  O  |
+|              |transactionAt | String   | 이용, 적립 일시 |  O  |
+|              |description | String   | 이용, 적립 설명 |  O  |
 
  - response payload
 ```json
@@ -79,14 +106,25 @@ CREATE TABLE PointTransaction (
  - URL : /points/accumulations
  - Method : POST
 
+**request** 
+| 이름            | 타입     | 설명                         | 필수 |
+|-----------------|----------|----------------------------|------|
+|point       | BigDecimal   | 적립포인트       |  O   |
+|description | String   | 적립설명       |  O   |
+
  - request payload
 ```json
 { 
-  "point" : "100",
+  "point" : 100,
   "description" : "ddd"
 }
     
 ```
+
+**Response**
+| 이름     | 타입     | 설명                           | 필수 |
+|----------|----------|------------------------------|------|
+| result   | String   | 작업 결과 ('success' 또는 'fail') | O    |
 
  - response payload
 ```json
@@ -99,6 +137,12 @@ CREATE TABLE PointTransaction (
  - URL : /points/use
  - Method : POST
 
+**request** 
+| 이름            | 타입     | 설명                         | 필수 |
+|-----------------|----------|----------------------------|------|
+|point       | BigDecimal   | 사용포인트       |  O   |
+|description | String   | 사용설명       |  O   |
+
  - request payload
 ```json
 { 
@@ -107,6 +151,11 @@ CREATE TABLE PointTransaction (
 }
     
 ```
+
+**Response**
+| 이름     | 타입     | 설명                           | 필수 |
+|----------|----------|------------------------------|------|
+| result   | String   | 작업 결과 ('success' 또는 'fail') | O    |
 
  - response payload
 ```json
