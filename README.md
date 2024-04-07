@@ -21,6 +21,8 @@
  - JPA N+1, JPA OSIV, @Transactional, inno DB
 ### [3/31](https://github.com/kps990515/flab/tree/master/0331)
  - dispatcher servlet, preparedStatement, statement, 소프트파싱 vs 하드파싱, 파티션 vs 샤딩, SPOF
+### [4/7](https://github.com/kps990515/flab/tree/master/0407)
+ - Http 상태, 메소드
 ### [JPA](https://github.com/kps990515/flab/tree/master/jpa)
 ### [KOTLIN](https://github.com/kps990515/flab/tree/master/kotlin)
 ### [Algorithm](https://github.com/kps990515/flab/tree/master/algorithm)
