@@ -1,1 +1,1 @@
-![img](https://github.com/kps990515/flab/tree/master/project_design/erd/erd.png)
+![img](https://github.com/kps990515/flab/blob/main/project_design/erd/erd.png)
