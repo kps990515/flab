@@ -1,248 +1,146 @@
-## Filter, Api, Result, Error
+## ExceptionHandler, Interceptor 
 
-### Filter
+### GlobalExceptionHandler
 ```java
 @Slf4j
-@Component
-public class LoggerFilter implements Filter {
-    @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        // 체인에 들어가기전에 req, res를 캐시에 담아서 가져옴
-        var req = new ContentCachingRequestWrapper((HttpServletRequest) request);
-        var res = new ContentCachingResponseWrapper((HttpServletResponse) response);
+@RestControllerAdvice
+@Order
+public class GlobalExceptionHandler {
+    @ExceptionHandler(value = Exception.class)
+    public ResponseEntity<Api<Object>> exception(Exception exception){
 
-        chain.doFilter(req, res);
-        // 체인에 들어간후
+        log.error("", exception);
 
-        // 1.request 정보
-        var headerNames = req.getHeaderNames();
-        var headerValues = new StringBuilder();
-
-        // 1-1. 헤더의 정보들을 하나씩 가져와서 로깅
-        headerNames.asIterator().forEachRemaining(headerKey -> {
-            var headerValue = req.getHeader(headerKey);
-            headerValues
-                    .append("[")
-                    .append(headerKey)
-                    .append(" : ")
-                    .append(headerValue)
-                    .append("] ");
-        });
-
-
-        // 1-2. requestbody, uri, method 추출
-        var requestBody = new String(req.getContentAsByteArray());
-        var uri = req.getRequestURI();
-        var method = req.getMethod();
-
-        // 1-3. 로그로 남기기
-        log.info(">>>>> uri : {}, method : {}, header : {}, body : {}", uri, method, headerValues, requestBody);
-
-        // 2. response 정보
-        var responseHeaderValues = new StringBuilder();
-        res.getHeaderNames().forEach(headerKey -> {
-            var headerValue = res.getHeader(headerKey);
-            responseHeaderValues
-                    .append("[")
-                    .append(headerKey)
-                    .append(" : ")
-                    .append(headerValue)
-                    .append("] ");
-        });
-
-        // 2-1. responsebody 내용 로깅
-        var responseBody = new String(res.getContentAsByteArray());
-        log.info("<<<<< uri : {}, method : {}, header : {}, body : {}", uri, method, responseHeaderValues, responseBody);
-
-        res.copyBodyToResponse(); // 사용한 response다시 넣어주기
+        return ResponseEntity
+                .status(500)
+                .body(
+                        Api.ERROR(ErrorCode.SERVER_ERROR)
+                );
     }
 }
 ```
 
-### Controller
+### BaseApi Interface
+```java
+public interface BaseApi {
+    BaseErrorCode getBaseErrorCode();
+    String getErrorDescription();
+}
+```
+
+### ApiException
+```java
+@Getter
+public class ApiException extends RuntimeException implements BaseApi {
+
+    private final BaseErrorCode baseErrorCode;
+    private final String errorDescription;
+
+    public ApiException(BaseErrorCode baseErrorCode){
+        super(baseErrorCode.getDescription());
+        this.baseErrorCode = baseErrorCode;
+        this.errorDescription = baseErrorCode.getDescription();
+    }
+
+    public ApiException(BaseErrorCode baseErrorCode, String errorDescription){
+        super(errorDescription);
+        this.baseErrorCode = baseErrorCode;
+        this.errorDescription = errorDescription;
+    }
+
+    public ApiException(BaseErrorCode baseErrorCode, Throwable tx){
+        super(tx);
+        this.baseErrorCode = baseErrorCode;
+        this.errorDescription = baseErrorCode.getDescription();
+    }
+
+    public ApiException(BaseErrorCode baseErrorCode, Throwable tx, String errorDescription){
+        super(tx);
+        this.baseErrorCode = baseErrorCode;
+        this.errorDescription = errorDescription;
+    }
+}
+```
+
+### ApiExceptionHandler
+```java
+@Slf4j
+@RestControllerAdvice
+@Order(Integer.MIN_VALUE)
+public class ApiExceptionHandler {
+    @ExceptionHandler(ApiException.class)
+    // ApiException은 RuntimeException을 상속받았기에 모든 Exception가져올 수 있음
+    public ResponseEntity<Api<Object>> apiExceiption(ApiException apiExceiption){
+        log.error("", apiExceiption);
+
+        var errorCode = apiExceiption.getBaseErrorCode();
+
+        return ResponseEntity
+                .status(errorCode.getHttpStatusCode())
+                .body(
+                        Api.ERROR(errorCode, apiExceiption.getErrorDescription())
+                );
+    }
+}
+```
+
+### AutorizationInterceptor
+```java
+@Slf4j
+@RequiredArgsConstructor
+@Component
+public class AuthorizationInterceptor implements HandlerInterceptor {
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        log.info("Authorization Interceptor uri : {}", request.getRequestURI());
+
+        // Web의 경우 Option 메소드일때 Pass
+        if(HttpMethod.OPTIONS.matches(request.getMethod())){
+            return true;
+        }
+
+        // js, html, png resource 요청하는 경우 Pass
+        if(handler instanceof ResourceHttpRequestHandler){
+            return true;
+        }
+
+        // TODO header 검증
+
+        return true;
+    }
+}
+```
+
+### WebConfig
 ```java
 @RequiredArgsConstructor
-@RestController
-@RequestMapping("/api/account")
-public class AccountApiController {
+@Configuration
+public class WebConfig implements WebMvcConfigurer {
+    private final AuthorizationInterceptor authorizationInterceptor;
 
-    private final AccountRepository accountRepository;
+    private List<String> OPEN_API = List.of(
+            "/open-api/**"
+    );
 
-    @GetMapping("/me")
-    public Api<Object> save(){
-        var response = AccountMeResponse.builder()
-                .name("a")
-                .email("a@gmail.com")
-                .registerdAt(LocalDateTime.now())
-                .build();
+    private List<String> DEFAULT_EXCLUDE = List.of(
+            "/",
+            "favicon.ico",
+            "/error"
+    );
 
-        //return Api.OK(response);
-        return Api.ERROR(UserErrorCode.USER_NOT_FOUND, "사용자 없음");
+    private List<String> SWAGGER = List.of(
+            "/swagger-ui.html",
+            "/swagger-ui/**",
+            "v3/api-docs/**"
+    );
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(authorizationInterceptor)
+                // 인증 interceptor 타지말아야할애들 설정
+                .excludePathPatterns(OPEN_API)
+                .excludePathPatterns(DEFAULT_EXCLUDE)
+                .excludePathPatterns(SWAGGER);
     }
-}
-```
-
-### Api 클래스
- - response를 담당
- - result(Result클래스)와 body(T)로 구성
-```json
-{
-    "result" : {
-        "resultCode": "200",
-        "resultMessage": "OK",
-        "resultDescription": "성공" 
-    },
-    "body": {
-
-    }
-}
-```
-
-```java
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class Api<T> {
-
-    private Result result;
-
-    @Valid
-    private T body;
-
-    // 정적메소드로 클래스 인스턴스 없이 호출 가능
-    // T data를 받고, Api<T>를 리턴
-    // 제네릭 함수
-    public static <T> Api<T> OK(T data){
-        var api = new Api<T>();
-        api.result = Result.OK(); //result
-        api.body = data;          //body
-        return api;
-    }
-
-    public static Api<Object> ERROR(Result result){
-        var api = new Api<Object>();
-        api.result = Result.ERROR(result);
-        return api;
-    }
-
-    public static Api<Object> ERROR(ErrorCodeIfs errorCodeIfs){
-        var api = new Api<Object>();
-        api.result = Result.ERROR(errorCodeIfs);
-        return api;
-    }
-
-    public static Api<Object> ERROR(ErrorCodeIfs errorCodeIfs, Throwable tx){
-        var api = new Api<Object>();
-        api.result = Result.ERROR(errorCodeIfs, tx);
-        return api;
-    }
-
-    public static Api<Object> ERROR(ErrorCodeIfs errorCodeIfs, String description){
-        var api = new Api<Object>();
-        api.result = Result.ERROR(errorCodeIfs, description);
-        return api;
-    }
-}
-```
-
-### Result클래스
-- Response에서 Result공통부분 담당
-- resultCode, message, description
-
-```json
-{
-    "result" : {
-        "resultCode": "200",
-        "resultMessage": "OK",
-        "resultDescription": "성공" 
-    }
-}
-```
-
-```java
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class Result {
-    private Integer resultCode;
-    private String resultMessage;
-    private String resultDescription;
-
-    public static Result OK(){
-        return Result.builder()
-                .resultCode(ErrorCode.OK.getErrorCode())
-                .resultMessage(ErrorCode.OK.getDescription())
-                .resultDescription("성공")
-                .build();
-    }
-
-    public static Result ERROR(ErrorCodeIfs errorCodeIfs){
-        return Result.builder()
-                .resultCode(errorCodeIfs.getErrorCode())
-                .resultMessage(errorCodeIfs.getDescription())
-                .resultDescription("에러")
-                .build();
-    }
-
-    public static Result ERROR(ErrorCodeIfs errorCodeIfs, Throwable tx){
-        return Result.builder()
-                .resultCode(errorCodeIfs.getErrorCode())
-                .resultMessage(errorCodeIfs.getDescription())
-                .resultDescription(tx.getLocalizedMessage())
-                .build();
-    }
-
-    public static Result ERROR(ErrorCodeIfs errorCodeIfs, String description){
-        return Result.builder()
-                .resultCode(errorCodeIfs.getErrorCode())
-                .resultMessage(errorCodeIfs.getDescription())
-                .resultDescription(description)
-                .build();
-    }
-}
-```
-
-### ErrorCodeInterface
-- ErrorCode Enum클래스들의 부모
-
-```java
-public interface ErrorCodeIfs {
-    Integer getHttpStatusCode();
-    Integer getErrorCode();
-    String getDescription();
-}
-```
-
-### ErrorCode 클래스
-- httpStatusCode, errorCode, description으로 구성
-
-```java
-@AllArgsConstructor
-@Getter
-public enum ErrorCode implements ErrorCodeIfs{
-    OK(200, 200, "성공"),
-    BAD_REQUEST(HttpStatus.BAD_REQUEST.value(), 400, "잘못된 요청"),
-    SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR.value(), 500, "서버 에러"),
-    NULL_POINT(HttpStatus.INTERNAL_SERVER_ERROR.value(), 512, "Null Point");
-    
-    // Enum 인스턴스 내부 값들을 변경 불가능하게 만들기 위해 final선언
-    private final Integer httpStatusCode;
-    private final Integer errorCode;
-    private final String description;
-}
-```
-
-### UserErrorCode클래스
-```java
-@AllArgsConstructor
-@Getter
-public enum UserErrorCode implements ErrorCodeIfs{
-    USER_NOT_FOUND(400, 1404, "사용자를 찾을 수 없음");
-
-
-    private final Integer httpStatusCode;
-    private final Integer errorCode;
-    private final String description;
 }
 ```
