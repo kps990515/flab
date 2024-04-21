@@ -23,7 +23,7 @@
  - dispatcher servlet, preparedStatement, statement, 소프트파싱 vs 하드파싱, 파티션 vs 샤딩, SPOF
 ### [4/7](https://github.com/kps990515/flab/tree/master/0407)
  - Http 상태, 메소드
-### [4/18](https://github.com/kps990515/flab/tree/master/0418)
+### [4/18](https://github.com/kps990515/flab/tree/master/0421)
  - AOP동작방식(transaction), gracefulshutdown, jpa Protected생성자
 ### [JPA](https://github.com/kps990515/flab/tree/master/jpa)
 ### [KOTLIN](https://github.com/kps990515/flab/tree/master/kotlin)
