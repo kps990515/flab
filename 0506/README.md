@@ -128,3 +128,22 @@
  - Executors
   - Executor, ExecutorService를 구현한 쓰레드 풀을 손쉽게 생성
   - 쓰레드의 개수 및 종류 설정 가능
+
+
+### RaceCondition
+ - 멀티스레딩 또는 멀티프로세스 환경에서 자원에 동시에 접근하려고 할 때 발생하는 문제
+ - 해결법
+  1. 뮤텍스, 세마포어
+  2. 락
+  3. Synchronized : 메소드나 블록을 동기화 / 클래스의 인스턴스 메소드나 지정된 객체에 락
+
+### 동시성 컬렉션
+ - 멀티스레드 환경에서 데이터 구조에 안전하게 접근할 수 있도록 설계된 데이터 구조
+ - ConcurrentHashMap, ConcurrentLinkedQueue, CopyOnWriteArrayList
+
+### 오토박싱, 언박싱
+ - 오토박싱 : int 타입의 값을 Integer 클래스 객체에 할당할 때 자동으로 Integer 객체가 생성
+ - 언박싱 : Integer 객체에서 int 값으로 자동 변환
+ - 주의점
+  - 추가적인 객체 생성이 일어날 수 있으므로 성능 저하가 발생
+  - null 값을 갖는 래퍼 클래스 객체를 언박싱할 때 NullPointerException
