@@ -100,20 +100,20 @@
   2. ThreadLocal을 사용할 때 사용 후에 비워주지 않는다면 해당 Thread를 부여받게 되는 다른 사용자가 기존에 세팅된 ThreadLocal의 데이터를 공유
 
 ### Callable 인터페이스
- - Runnable : 스레드 생성 및 실행
+- Runnable : 스레드 생성 및 실행
   - run 단일메소드, 파라미터 리턴 없음
 
- - Callable : 제네릭 사용해 결과 return가능
+- Callable : 제네릭 사용해 결과 return가능
 
- - Future 
+- Future 
   - Callable은 잔여 쓰레드가 없어 실행 연기 될 수 있음
   - 미래에 완료된 Callable 반환값을 구하기 위해 사용
 
- - Excecutor : 쓰레드 풀 구현 중 일부
+- Excecutor : 쓰레드 풀 구현 중 일부
   - 등록된 작업(Runnable)을 실행하기 위한 인터페이스
   - 작업 등록과 작업 실행 중에서 작업 실행만을 책임짐
 
- - ExecutorService 
+- ExecutorService 
   - 작업(Runnable, Callable) 등록을 위한 인터페이스
   - Executor를 상속받아서 작업 등록 뿐만 아니라 실행을 위한 책임도 있음
   - 쓰레드 풀은 기본적으로 ExecutorService 인터페이스를 구현
