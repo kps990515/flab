@@ -125,38 +125,38 @@
       - 모든 결과가 나올 때까지 대기하는 Blocking 방식
       - 최대 쓰레드 풀의 크기만큼 작업을 동시에 실행
 
- - Executors
+- Executors
   - Executor, ExecutorService를 구현한 쓰레드 풀을 손쉽게 생성
   - 쓰레드의 개수 및 종류 설정 가능
 
 ### 동시성관리 Java
- 1. volatile 
+1. volatile 
   - 변수를 메인 메모리에 저장
   - 모든 스레드가 변수의 최신 값을 볼 수 있도록 보장
   - 복합 작업(증가 연산 등)에서는 원자성을 보장하지 않음
 
- 2. synchronized
+2. synchronized
   - 메소드나 코드 블록에 사용되어, 한 시점에 하나의 스레드만 해당 코드 영역을 실행
   - 무거운잠금(OS가 스레드 동기화 관리 - Context Switch오버헤드 큼)
 
- 3. Atomic
+3. Atomic
   - CAS(Compare-And-Swap) 연산
   - 가벼운잠금(CPU의 원자적 연산을 통해 데이터를 동기화 - 빠름, 락프리)
 
 ### RaceCondition
- - 멀티스레딩 또는 멀티프로세스 환경에서 자원에 동시에 접근하려고 할 때 발생하는 문제
- - 해결법
+- 멀티스레딩 또는 멀티프로세스 환경에서 자원에 동시에 접근하려고 할 때 발생하는 문제
+- 해결법
   1. 뮤텍스, 세마포어
   2. 락
   3. Synchronized : 메소드나 블록을 동기화 / 클래스의 인스턴스 메소드나 지정된 객체에 락
 
 ### 동시성 컬렉션
- - 멀티스레드 환경에서 데이터 구조에 안전하게 접근할 수 있도록 설계된 데이터 구조
- - ConcurrentHashMap, ConcurrentLinkedQueue, CopyOnWriteArrayList
+- 멀티스레드 환경에서 데이터 구조에 안전하게 접근할 수 있도록 설계된 데이터 구조
+- ConcurrentHashMap, ConcurrentLinkedQueue, CopyOnWriteArrayList
 
 ### 오토박싱, 언박싱
- - 오토박싱 : int 타입의 값을 Integer 클래스 객체에 할당할 때 자동으로 Integer 객체가 생성
- - 언박싱 : Integer 객체에서 int 값으로 자동 변환
- - 주의점
+- 오토박싱 : int 타입의 값을 Integer 클래스 객체에 할당할 때 자동으로 Integer 객체가 생성
+- 언박싱 : Integer 객체에서 int 값으로 자동 변환
+- 주의점
   - 추가적인 객체 생성이 일어날 수 있으므로 성능 저하가 발생
   - null 값을 갖는 래퍼 클래스 객체를 언박싱할 때 NullPointerException
