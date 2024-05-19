@@ -60,7 +60,7 @@
 - save 함수
   - 새로운 객체 isNew(entity) = true 이면 persist
   - 아니면 merge
-- 해결방법
+- 해결방법 : isNew의 값 명시적으로 변경
   - isNew이 true가 되는 기준을 id 존재 여부가 아닌 아래조건으로 변경
     - 영속 상태가 된 후
     - 영속성 컨텍스트에서 조회 안되었을떄
