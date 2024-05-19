@@ -54,3 +54,50 @@
 - persist : 새로운 엔티티를 영속성 컨텍스트(Persistence Context)에 추가하고 데이터베이스에 저장
 - merge : 준영속 상태(detached state)나 새로운 엔티티를 영속성 컨텍스트에 병합하여 데이터베이스에 저장하거나 업데이트
   - persist -> detach -> persist상태
+
+### [JPA Save시 select발생](https://chatgpt.com/c/2a75afd0-1a4f-4cbb-8a91-7f7b34a74fb8)
+- ID가 AutoIncrement가 아닌경우 해당 ID가 중복인지 확인하기 위해 select발생
+- save 함수
+  - 새로운 객체 isNew(entity) = true 이면 persist
+  - 아니면 merge
+- 해결방법
+  - isNew이 true가 되는 기준을 id 존재 여부가 아닌 아래조건으로 변경
+    - 영속 상태가 되기 전
+    - 영속성 컨텍스트에서 조회 안되었을떄
+- 결론 : DB에서 ID중복을 확인하지 않고(select안하고) 바로 insert가능
+
+```java
+@Entity
+@Table(name = "reserved_seat")
+public class ReservedSeat implements Persistable<String> { // Persistable 인터페이스를 구현
+	@Id
+	@Column(name = "id")
+	private String id;
+
+	...
+
+	@Transient
+	private boolean isNew = true;
+
+	protected ReservedSeat() {
+	}
+
+	@Override // // Persistable 인터페이스를 오버라이딩
+	public boolean isNew() {
+		return isNew;
+	}
+
+	@PrePersist // 영속상태가 되기 직전 false로 바꿔줌
+	@PostLoad // 영속성 컨텍스트에서 조회가 되면 false로 바꿔줌
+	void markNotNew() {
+		this.isNew = false;
+	}
+
+	@Override
+	public String getId() {
+		return this.id;
+	}
+    
+    ...
+}
+```
