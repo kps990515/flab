@@ -27,6 +27,8 @@
  - AOP동작방식(transaction), gracefulshutdown, jpa Protected생성자
 ### [5/6](https://github.com/kps990515/flab/tree/master/0506)
  - CQRS, Index, Thread Local, Callable,Executors,Service, 기술면접
+### [5/19](https://github.com/kps990515/flab/tree/master/0519)
+ - CORS, HashMap, Persist VS Merge, JPA Save시 select발생
 ### [JPA](https://github.com/kps990515/flab/tree/master/jpa)
 ### [KOTLIN](https://github.com/kps990515/flab/tree/master/kotlin)
 ### [Algorithm](https://github.com/kps990515/flab/tree/master/algorithm)
