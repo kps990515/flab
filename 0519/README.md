@@ -62,8 +62,9 @@
   - 아니면 merge
 - 해결방법
   - isNew이 true가 되는 기준을 id 존재 여부가 아닌 아래조건으로 변경
-    - 영속 상태가 되기 전
+    - 영속 상태가 된 후
     - 영속성 컨텍스트에서 조회 안되었을떄
+    - 영속성 컨텍스트에서 업데이트 된 후 
 - 결론 : DB에서 ID중복을 확인하지 않고(select안하고) 바로 insert가능
 
 ```java
@@ -87,8 +88,9 @@ public class ReservedSeat implements Persistable<String> { // Persistable 인터
 		return isNew;
 	}
 
-	@PrePersist // 영속상태가 되기 직전 false로 바꿔줌
+	@PostPersist // 영속상태가 된 후 false로 바꿔줌
 	@PostLoad // 영속성 컨텍스트에서 조회가 되면 false로 바꿔줌
+  @PostUpdate // 영속성 컨텍스트에서 업데이트 된 후 false로 바꿔줌
 	void markNotNew() {
 		this.isNew = false;
 	}
