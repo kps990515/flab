@@ -29,6 +29,8 @@
  - CQRS, Index, Thread Local, Callable,Executors,Service, 기술면접
 ### [5/19](https://github.com/kps990515/flab/tree/master/0519)
  - CORS, HashMap, Persist VS Merge, JPA Save시 select발생
+### [6/17](https://github.com/kps990515/flab/tree/master/0617)
+ - 내부/외부캐시, 자바 이너클래스, 익명클래스
 ### [JPA](https://github.com/kps990515/flab/tree/master/jpa)
 ### [KOTLIN](https://github.com/kps990515/flab/tree/master/kotlin)
 ### [Algorithm](https://github.com/kps990515/flab/tree/master/algorithm)
