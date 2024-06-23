@@ -1,7 +1,7 @@
 # AuthorizationInterceptor 분석
 - Spring의 HandlerInterceptor를 구현하여 HTTP 요청을 가로채고 인증 토큰을 검증하는 역할
 
-[Tokenservice](https://github.com/kps990515/flab/tree/master/project/5.TokenService)
+- [Tokenservice](https://github.com/kps990515/flab/tree/master/project/4.TokenService)
 
 ```java
 @Slf4j

@@ -1,7 +1,7 @@
 # WebConfig 클래스 분석
 
-[AuthorizationInterceptor](https://github.com/kps990515/flab/tree/master/project/3.interceptor)
-[UserSessionResolver](https://github.com/kps990515/flab/tree/master/project/4.argumentResolver)
+- [AuthorizationInterceptor](https://github.com/kps990515/flab/tree/main/project/3.%20interceptor)
+- [UserSessionResolver](https://github.com/kps990515/flab/tree/master/project/5.argumentResolver)
 
 ```java
 @RequiredArgsConstructor
