@@ -1,5 +1,6 @@
 # AuthorizationInterceptor 분석
-- Spring의 HandlerInterceptor를 구현하여 HTTP 요청을 가로채고 인증 토큰을 검증하는 역할
+- 헤더에 있는 authorization-token를 통해 userId가 있는지 없는지 판별
+- userId가 있으면 requestContext에 넣어줌
 
 - [Tokenservice](https://github.com/kps990515/flab/tree/master/project/4.TokenService)
 

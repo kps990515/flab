@@ -1,4 +1,7 @@
 # argumentResolver
+- controller parameter에 User클래스가 있으면
+- requestContext에서 UserId 가져오고
+- userEntity의 정보를 리턴해줌
 
 ```java
 @Component
