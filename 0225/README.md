@@ -2,6 +2,7 @@
 
 ### [Filter, Interceptor, Argument Resolver](https://velog.io/@dlduq29/Filter-Interceptor-Argument-Resolver)
 
+![img](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F9983FB455BB4E5D30C)
  - Filter는 서블릿 컨테이너 레벨에서 작동하며 모든 요청에 대한 전처리와 후처리를 담당합니다.
  - Interceptor는 Spring MVC 내에서 작동하며, 컨트롤러 실행 전후의 처리에 좀 더 초점을 맞춥니다.
  - AOP는 애플리케이션의 다양한 부분에 걸쳐 재사용 가능한 공통 로직을 적용하는데 초점
