@@ -89,7 +89,7 @@ public Person(final Name name, final List<Friend> friends) {
 ```
 
 ### [call by Value, call by Reference](https://bcp0109.tistory.com/360)
-1. Call by Value : 인자의 "값을 복사"하여 전달하는 방식, 함수나 메서드 내부에서 이 값이 변경되어도 원본 변수에는 아무런 영향을 미치지 않습니다 
+1. Call by Value : 인자의 "값을 복사"하여 전달하는 방식, 참조된 객체의 속성을 수정할 수는 있지만 원본 변수를 새 객체로 변경할 수는 없음
 2. Call by Reference : 참조 (주소) 를 직접 전달, 메서드 내에서 참조된 객체나 변수의 상태를 바꾸면 원본에도 영향
 
 3. JAVA : call by Value, 참조 객체를 넘기는것이 아닌 참조 객체의 주소값만을 전달
