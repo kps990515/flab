@@ -98,11 +98,11 @@ System.out.println("member = " + member);
         4. 서버도 Established 상태로 변경
 
     - 4-way handshaking
-        1. 클라이언트 FIN 서버로 송신 후 FIN-WAIT-1 상태로 변경
-        2. 서버 CLOSE-WAIT상태로 변경 후 ACK 송신
+        1. 클라이언트 작업 끝나면 서버로 FIN 송신
+        2. 서버 CLOSE-WAIT상태로 변경 후 클라이언트에게 ACK 송신
         3. 클라이언트 FIN-WAIT-2로 변경
-        4. 서버의 종료 프로세스 진행되면 FIN 송신 후 LAST_ACK로 변경
-        5. 클라이언트 ACK 서버로 송신하고 TIME-WAIT 상태 변경
+        4. 서버가 종료되면 클라이언트에게 FIN 송신 후 LAST_ACK로 변경
+        5. 클라이언트가 서버에게 ACK 송신하고 TIME-WAIT 상태 변경
 
 ### DBCP
  - 웹 컨테이너(WAS)가 실행되면서 DB와 미리 connection(연결)을 해놓은 객체들을 pool에 저장해두었다가.
