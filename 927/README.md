@@ -115,11 +115,11 @@ System.out.println("member = " + member);
     - 커넥션을 계속해서 재사용하기 때문에 생성되는 커넥션 수를 제한적으로 설정함
 
 ### Context Switching
- - 현재 진행하고 있는 Task(Process, Thread)의 상태를 저장하고 다음 진행할 Task의 상태 값을 읽어 적용하는 과정
+ - CPU가 현재 실행 중인 프로세스나 스레드의 상태(Context)를 저장하고, 다른 프로세스나 스레드의 상태를 불러와 실행을 전환하는 작업
  - 과정
-    1. Task의 대부분 정보는 Register에 저장되고 PCB(Process Control Block)로 관리
-    2. 현재 실행하고 있는 Task의 PCB 정보를 저장
-    3. 다음 실행할 Task의 PCB 정보를 읽어 Register에 적재하고 CPU가 이전에 진행했던 과정을 연속적으로 수행
+    1. 현재 프로세스의 상태 저장 : 운영체제의 PCB(Process Control Block)
+    2. 새로운 프로세스 상태 불러오기 : PCB에서 가져와 CPU 레지스터에 로드
+    3. CPU 제어권 전환
  - 코스트
     1. Cache 초기화
     2. Memory Mapping 초기화
