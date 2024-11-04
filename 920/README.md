@@ -89,11 +89,8 @@ public Person(final Name name, final List<Friend> friends) {
 ```
 
 ### [call by Value, call by Reference](https://bcp0109.tistory.com/360)
-1. Call by Value : 호출자 (Caller) 의 변수와 호출 당하는 수신자 (Callee) 의 파라미터는 복사된 서로 다른 변수입니다.
-값만을 전달하기 때문에 수신자의 파라미터를 수정해도 호출자의 변수에는 아무런 영향이 없습니다.
-
-2. Call by Reference : 참조 (주소) 를 직접 전달, 참조를 직접 넘기기 때문에 호출자의 변수와 수신자의 파라미터는 완전히 동일한 변수입니다.
-메서드 내에서 파라미터를 수정하면 그대로 원본 변수에도 반영됩니다.
+1. Call by Value : 인자의 "값을 복사"하여 전달하는 방식, 함수나 메서드 내부에서 이 값이 변경되어도 원본 변수에는 아무런 영향을 미치지 않습니다 
+2. Call by Reference : 참조 (주소) 를 직접 전달, 메서드 내에서 참조된 객체나 변수의 상태를 바꾸면 원본에도 영향
 
 3. JAVA : call by Value, 참조 객체를 넘기는것이 아닌 참조 객체의 주소값만을 전달
 ```java
