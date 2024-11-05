@@ -32,12 +32,12 @@
 ```java
 // Member와 Team은 연결되어있지만 Member만 조회하고 싶은경우
 public class Member{
-   @ManyToOne(fetch = FetchType.LAZY)
+   @ManyToOne(fetch = FetchType.LAZY) //지연로딩
    @JoinColumn(name = "TEAM_ID")
-   private Team team;
+   private Team team; // 처음에는 프록시객체로 넣어둠
 }
 
-Team team = member.getTeam() // 실제 team을 사용하는 시점에 초기화
+Team team = member.getTeam() // 실제 team을 사용하는 시점에 프록시객체를 초기화
 ```
 
  - 즉시로딩
