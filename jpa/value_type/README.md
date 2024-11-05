@@ -35,10 +35,12 @@
    @Embedded
    private Period nowSectorPeriod;
 
-   @Embedded
-   // 위에 같은 값이 있으므로 컬럼명 재정의
-   @AttributeOverrides((@AttributeOverride(name="startDate", column = @Column("pastStartDate"))))
-   private Period pastSectorperiod;
+    @Embedded
+    @AttributeOverrides({
+        @AttributeOverride(name = "startDate", column = @Column(name = "pastStartDate")),
+        @AttributeOverride(name = "endDate", column = @Column(name = "pastEndDate"))
+    })
+    private Period pastSectorPeriod; // 과거 기간 정보
  }
  ```
 
