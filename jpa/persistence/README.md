@@ -9,7 +9,7 @@
     1. new/transient : 새로운상태(new Member, setId())
     2. managed : Persistence Context에 관리되는 상태(em.persist())
     3. detached : 저장되었다가 분리된 상태(em.detach())
-    4. removed
+    4. removed : 엔티티가 데이터베이스에서 삭제될 예정인 상태
 
  - 장점
     1. 1차캐시(id, Entity, 스냅샷)
