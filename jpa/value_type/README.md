@@ -105,7 +105,7 @@
  - 값 타입은 a.equals(b)를 사용해서 동등성 비교하도록 재정의해야함
 
 ### 값타입 컬렉션
- - 엔티티에 여러 개의 값 타입을 컬렉션 형태로 포함(Set<String>, List<Address>)
+ - 엔티티에 여러 개의 값 타입을 컬렉션 형태로 포함(Set, List)
  - @ElementCollection : 값 타입 컬렉션임을 명시
  - @CollectionTable 사용 : 컬렉션 데이터가 저장될 테이블의 이름과 join 관계를 설정
  - 값 타입 컬렉션의 제약
