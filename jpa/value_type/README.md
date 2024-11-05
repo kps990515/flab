@@ -130,12 +130,21 @@
       }
       ```
 
- ```java
- @ElementCollection
- // FAVORITE_FOODS라는 테이블에 저장되고, Member테이블과 member_id로 연결
- @CollectionTable(name="FAVORITE_FOODS", joinColumns = @JoinColumn(name = "MEMBER_ID"))
- // Member테이블에서 food_name이라는 컬럼으로 사용됨
- @Column(name = "FOOD_NAME")
- private Set<String> favoriteFoods = new HashSet<>();
- ```
+- 데이터베이스에 저장되는 방식
+  - Member 엔티티와 값 타입 컬렉션 favoriteFoods는 두 개의 테이블에 저장  
+```java
+@Entity
+public class Member {
+    
+    @Id @GeneratedValue
+    private Long id;
+    private String name;
+
+    @ElementCollection
+    // FAVORITE_FOODS라는 테이블에 저장되고, Member테이블과 member_id로 연결
+    @CollectionTable(name="FAVORITE_FOODS", joinColumns = @JoinColumn(name = "MEMBER_ID"))
+    // Member테이블에서 food_name이라는 컬럼으로 사용됨
+    @Column(name = "FOOD_NAME")
+    private Set<String> favoriteFoods = new HashSet<>();
+```
 
