@@ -105,20 +105,23 @@
  - 값 타입은 a.equals(b)를 사용해서 동등성 비교하도록 재정의해야함
 
 ### 값타입 컬렉션
- - 값 타입을 하나이상 저장할때 사용
- - @ElementCollection, @CollectionTable 사용
- - DB는 컬렉션을 같은 테이블에 저장할수없기에 별도의 테이블 생성해서 사용
- - 모든 컬럼은 전부 복합PK(nullX, 중복X)
- - CASCADE + 고아객체 제거기능 필수로 가짐
- - 지연로딩
- - 엔티티와 다르게 식별자 개념이 없음
- - 값 변경하면 추적 불가
- - 변경사항 발생시 주인 엔티티와 관련된 모든데이터를 삭제하고 다시 저장(Address하나만 변경해도 Address 다 지워버리고 새로 다 insert)
- - 실무에서는 값 타입 대신 Entity로 하고 일대다로 세팅하는 경우도 있음
+ - 엔티티에 여러 개의 값 타입을 컬렉션 형태로 포함(Set<String>, List<Address>)
+ - @ElementCollection : 값 타입 컬렉션임을 명시
+ - @CollectionTable 사용 : 컬렉션 데이터가 저장될 테이블의 이름과 join 관계를 설정
+ - 값 타입 컬렉션의 제약
+   - 복합 PK: 값 타입 컬렉션의 모든 컬럼은 복합 기본 키로 설정되며, NULL이 불가하고 중복이 허용되지 않습니다.
+   - CASCADE + 고아객체 제거기능 필수로 가짐
+   - 지연 로딩: 값 타입 컬렉션은 기본적으로 지연 로딩(Lazy Loading)을 사용
+ - 값 타입 컬렉션의 데이터 변경 방식
+   - 값 타입 컬렉션에는 식별자가 없기 때문에 JPA는 컬렉션을 추적할 수 없습니다.
+   - 값이 변경될 경우, JPA는 기존의 값 타입 컬렉션 데이터를 모두 삭제하고, 새롭게 컬렉션의 모든 데이터를 다시 삽입
+   - 실무에서는 값 타입 대신 Entity로 하고 일대다로 세팅하는 경우도 있음
 
  ```java
  @ElementCollection
+ // FAVORITE_FOODS라는 테이블에 저장되고, Member테이블과 member_id로 연결
  @CollectionTable(name="FAVORITE_FOODS", joinColumns = @JoinColumn(name = "MEMBER_ID"))
+ // Member테이블에서 food_name이라는 컬럼으로 사용됨
  @Column(name = "FOOD_NAME")
  private Set<String> favoriteFoods = new HashSet<>();
  ```
