@@ -116,6 +116,19 @@
    - 값 타입 컬렉션에는 식별자가 없기 때문에 JPA는 컬렉션을 추적할 수 없습니다.
    - 값이 변경될 경우, JPA는 기존의 값 타입 컬렉션 데이터를 모두 삭제하고, 새롭게 컬렉션의 모든 데이터를 다시 삽입
    - 실무에서는 값 타입 대신 Entity로 하고 일대다로 세팅하는 경우도 있음
+      ```java
+      @Entity
+      public class FavoriteFood {
+          @Id @GeneratedValue
+          private Long id;
+      
+          @ManyToOne
+          @JoinColumn(name = "MEMBER_ID")
+          private Member member;
+      
+          private String foodName;
+      }
+      ```
 
  ```java
  @ElementCollection
@@ -126,16 +139,3 @@
  private Set<String> favoriteFoods = new HashSet<>();
  ```
 
-```java
-@Entity
-public class FavoriteFood {
-    @Id @GeneratedValue
-    private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "MEMBER_ID")
-    private Member member;
-
-    private String foodName;
-}
-```
