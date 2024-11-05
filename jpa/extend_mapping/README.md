@@ -8,6 +8,25 @@
    1. 조인전략 : 각각의 독립적 데이터를 두고 PK, FK공유
       - 장점 : 정규화, 외래키 참조 무결성제약조건 활용가능, 저장공간 효율화
       - 단점 : 조회시 조인을 많이 사용, 조회쿼리 복잡, 데이터 저장시 INSERT 2번 사용
+```java
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class Vehicle {
+    @Id @GeneratedValue
+    private Long id;
+    private String name;
+}
+
+@Entity
+public class Car extends Vehicle {
+    private int seatingCapacity;
+}
+
+@Entity
+public class Bike extends Vehicle {
+    private boolean hasCarrier;
+}
+```
 
    2. 단일테이블 전략 : 상위테이블에 모든 하위 데이터 컬럼 넣기(JPA 기본전략)
       - 장점 : 조인이 필요없음, 조회쿼리 단순
