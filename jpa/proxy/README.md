@@ -52,7 +52,7 @@ public class Member{
  - 즉시로딩 주의(지연로딩만 사용하자)
    - 가급적 지연로딩만 사용
    - 즉시로딩 적용하면 예상하지 못한 SQL 발생
-   - 즉시로딩은 JPQL에서 N+1 문제 발생
+   - 즉시로딩은 JPQL에서 N+1 문제 발생(N개의 Member를 각각 가져오면서 매번 Team을 별도의 쿼리로 조회)
    - @ManyToOne, @OneToOne는 기본이 즉시로딩(LAZY로 변경해야함)
    - @OneToMany, @ManyToMany는 기본이 지연로딩
 
