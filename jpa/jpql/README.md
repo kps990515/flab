@@ -65,9 +65,15 @@ List<Member> members = new JPAQuery<>(em)
  ```
 
  - 여러값 조회 방법(m.username, m.age)
-    1. Query타입 조회 
+    1. Query타입 조회(Object[] 배열로 반환)
     ```java
     Query query = em.createQuery("SELECT m.username, m.age FROM MEMBER m")
+    List<Object[]> results = query.getResultList();
+    for (Object[] result : results) {
+        String username = (String) result[0];
+        Integer age = (Integer) result[1];
+        System.out.println("Username: " + username + ", Age: " + age);
+    }
     ```
     2. Object[] 타입 조회
     ```java
