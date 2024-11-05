@@ -46,7 +46,24 @@
 
 ### 값타입 공유와 불변객체
  - 하나의 값타입을 여러 객체에서 공유하는 것은 위험
- - new period -> memberA, memberB set -> period변경 -> A,B 둘다 바뀜
+ - 
+ ```java
+ // 공통 Period 객체 생성
+ Period period = new Period(LocalDateTime.now(), LocalDateTime.now().plusDays(10));
+ 
+ // MemberA와 MemberB가 같은 period 객체를 공유
+ Member memberA = new Member();
+ memberA.setPeriod(period);
+ 
+ Member memberB = new Member();
+ memberB.setPeriod(period);
+
+ // 만약 memberA의 period를 변경하면...
+ memberA.getPeriod().setEndDate(LocalDateTime.now().plusDays(20));
+ 
+ // memberB의 period도 변경됨 (공유된 참조이므로)
+ System.out.println(memberB.getPeriod().getEndDate()); // 예상하지 못한 결과가 나올 수 있음
+ ```
  - 값 타입의 내용을 복사해서 사용 필요(깊은 복사 필요)
  - 원천방지를 위해 객체타입은 불변객체로 설계해야함
  - 생성자로만 값을 설정하게하고 setter를 제거
