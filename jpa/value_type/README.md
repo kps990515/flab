@@ -75,6 +75,29 @@
    ```
  - 원천방지를 위해 객체타입은 불변객체로 설계해야함
  - 생성자로만 값을 설정하게하고 setter를 제거
+   ```java
+  @Embeddable
+  public class Period {
+  
+      private final LocalDateTime startDate;
+      private final LocalDateTime endDate;
+  
+      // 생성자로만 값 설정, setter 없음
+      public Period(LocalDateTime startDate, LocalDateTime endDate) {
+          this.startDate = startDate;
+          this.endDate = endDate;
+      }
+  
+      // getter만 제공
+      public LocalDateTime getStartDate() {
+          return startDate;
+      }
+  
+      public LocalDateTime getEndDate() {
+          return endDate;
+      }
+  }
+   ```
 
 ### 값타입의 비교
  - 값타입은 내용이 같으면 같은걸로 봐야함
