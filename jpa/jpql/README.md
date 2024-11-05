@@ -1,16 +1,32 @@
 ## JPQL
 
 ### 기본
- - 테이블이 아닌 엔티티 객체를 대상으로 검색하기 위함
+ - 데이터베이스 테이블이 아닌 JPA 엔티티와 그 필드를 대상으로 작성
  - 객체지향 쿼리
  - SQL을 추상화해서 특정 DB에 의존적이지 않음
  - 결국 SQL로 변환되서 실행
+ - 단점 : 컴파일 타임에 오류를 확인할 수 없음
+```java
+String jpql = "SELECT m FROM Member m WHERE m.name = :name";
+List<Member> members = em.createQuery(jpql, Member.class)
+                         .setParameter("name", "John")
+                         .getResultList();
+```
 
 ### QueryDSL
  - 자바로 JPQL 작성가능
  - JPQL 빌더 역할
  - 컴파일 시점에 문법오류 탐색 가능
  - 동적쿼리 작성 편함
+```java
+QMember member = QMember.member; // Q클래스는 QueryDSL이 엔티티 클래스를 바탕으로 자동 생성하는 클래스
+
+List<Member> members = new JPAQuery<>(em)
+                           .select(member)
+                           .from(member)
+                           .where(member.name.eq("John"))
+                           .fetch();
+```
 
 ### Native SQL
  - SQL을 직접사용하는 기능
