@@ -3,7 +3,7 @@
 ### Persistence Context
  - DB 저장하기 전 엔티티를 유지하는 정보(Entity Manager단위로 작동)
  - EntityManager.persist(Entity)
- - EntityManager <-> PersistenceContext N:1관계
+ - EntityManager <-> PersistenceContext 1:1관계
 
  - 생명주기
     1. new/transient : 새로운상태(new Member, setId())
