@@ -31,6 +31,29 @@ public class Bike extends Vehicle {
    2. 단일테이블 전략 : 상위테이블에 모든 하위 데이터 컬럼 넣기(JPA 기본전략)
       - 장점 : 조인이 필요없음, 조회쿼리 단순
       - 단점 : 자식 엔티티 컬럼은 null 가능, 데이터가 많아지면 점점 느려짐
+      - Vehicle이라는 하나의 테이블에 모든 Car와 Bike의 데이터를 포함(VEHICLE_TYPE이라는 컬럼으로 엔티티 유형을 구분)
+```java
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "VEHICLE_TYPE")
+public abstract class Vehicle {
+    @Id @GeneratedValue
+    private Long id;
+    private String name;
+}
+
+@Entity
+@DiscriminatorValue("CAR")
+public class Car extends Vehicle {
+    private int seatingCapacity;
+}
+
+@Entity
+@DiscriminatorValue("BIKE")
+public class Bike extends Vehicle {
+    private boolean hasCarrier;
+}
+```
 
    3. 구현 클래스마다 테이블 전략 : 상위테이블 없이 상위테이블 컬럼을 각 테이블에 넣기
       - 추천X
