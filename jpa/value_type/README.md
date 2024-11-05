@@ -125,3 +125,17 @@
  @Column(name = "FOOD_NAME")
  private Set<String> favoriteFoods = new HashSet<>();
  ```
+
+```java
+@Entity
+public class FavoriteFood {
+    @Id @GeneratedValue
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "MEMBER_ID")
+    private Member member;
+
+    private String foodName;
+}
+```
