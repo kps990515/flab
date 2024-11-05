@@ -65,6 +65,14 @@
  System.out.println(memberB.getPeriod().getEndDate()); // 예상하지 못한 결과가 나올 수 있음
  ```
  - 값 타입의 내용을 복사해서 사용 필요(깊은 복사 필요)
+   ```java
+   // MemberA와 MemberB가 각각 독립적인 Period 객체를 사용
+   memberA.setPeriod(new Period(LocalDateTime.now(), LocalDateTime.now().plusDays(10)));
+   memberB.setPeriod(new Period(LocalDateTime.now(), LocalDateTime.now().plusDays(10)));
+   
+   // 이제 memberA의 period를 변경해도 memberB는 영향을 받지 않음
+   memberA.getPeriod().setEndDate(LocalDateTime.now().plusDays(20));
+   ```
  - 원천방지를 위해 객체타입은 불변객체로 설계해야함
  - 생성자로만 값을 설정하게하고 setter를 제거
 
