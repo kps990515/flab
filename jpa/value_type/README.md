@@ -46,7 +46,6 @@
 
 ### 값타입 공유와 불변객체
  - 하나의 값타입을 여러 객체에서 공유하는 것은 위험
- - 
  ```java
  // 공통 Period 객체 생성
  Period period = new Period(LocalDateTime.now(), LocalDateTime.now().plusDays(10));
@@ -76,27 +75,27 @@
  - 원천방지를 위해 객체타입은 불변객체로 설계해야함
  - 생성자로만 값을 설정하게하고 setter를 제거
    ```java
-  @Embeddable
-  public class Period {
-  
-      private final LocalDateTime startDate;
-      private final LocalDateTime endDate;
-  
-      // 생성자로만 값 설정, setter 없음
-      public Period(LocalDateTime startDate, LocalDateTime endDate) {
-          this.startDate = startDate;
-          this.endDate = endDate;
-      }
-  
-      // getter만 제공
-      public LocalDateTime getStartDate() {
-          return startDate;
-      }
-  
-      public LocalDateTime getEndDate() {
-          return endDate;
-      }
-  }
+   @Embeddable
+   public class Period {
+   
+       private final LocalDateTime startDate;
+       private final LocalDateTime endDate;
+   
+       // 생성자로만 값 설정, setter 없음
+       public Period(LocalDateTime startDate, LocalDateTime endDate) {
+           this.startDate = startDate;
+           this.endDate = endDate;
+       }
+   
+       // getter만 제공
+       public LocalDateTime getStartDate() {
+           return startDate;
+       }
+   
+       public LocalDateTime getEndDate() {
+           return endDate;
+       }
+   }
    ```
 
 ### 값타입의 비교
