@@ -34,8 +34,12 @@
    - 단점 : 모든 지연로딩을 커넥션안에서만 처리가능, View에서 예기치못한 수정발생할 수 있음
 
 ### [@Transactional](https://medium.com/gdgsongdo/transactional-%EB%B0%94%EB%A5%B4%EA%B2%8C-%EC%95%8C%EA%B3%A0-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-7b0105eb5ed6)
- - 어노테이션이 적용된 범위 안에서 데이터베이스 작업이 전부 성공하면 커밋하고, 하나라도 실패하면 롤백하는 방식으로 작동
- - AOP를 사용해 프록시 생성 -> 호출 가로챔 -> 트랜잭션 관리코드 삽입 -> 실제 객체의 메서드 호출 -> 호출완료되면 프록시가 트랜잭션 커밋, 롤백 
+ - @Transactional은 메서드나 클래스에 트랜잭션을 적용
+ - 어트랜잭션은 데이터베이스 작업이 모두 성공하면 커밋(commit)하고, 하나라도 실패하면 롤백(rollback)해서 데이터의 일관성을 보장하는 기능
+ - 작동방식
+    - AOP(Aspect-Oriented Programming, 관점 지향 프로그래밍)를 통해 프록시 객체가 생성
+    - 프록시가 메서드 호출을 가로채고, 트랜잭션 관리 코드를 삽입하여 작업을 처리
+    - 작업이 끝나면 프록시가 커밋(성공) 또는 롤백(실패)을 결정
 
  - 속성
    1. REQUIRED (기본값): 트랜잭션이 없으면 새 트랜잭션 시작, 이미 있으면 재사용
@@ -49,7 +53,7 @@
  - 주의점
    - public 사용필요
    - 다른 어노테이션과의 충돌 고려(@Secure 인증하기 전 @Transactional 실행 등)
-   - Service 계층에서 사용
+   - Service 계층에서 주로 사용
    - SimpleJpaRepository클래스는 @Transactional 사용(조회시 @Transactional(readOnly = true)통해 DB락 없이 읽기성능향상)
    - checked Exception 예외처리 : @Transactional(rollbackFor={Exception.class})을 통해 rollback 하게 할 수 있음
    - Kotlin에서는 check, unchecked구분이 없어서 다 롤백됨
