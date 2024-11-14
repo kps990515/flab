@@ -3,7 +3,8 @@
 ### 트랜잭션 설정법
   1. 프로그래밍적 트랜잭션
     - TransactionTemplate(권장)
-    ```java
+
+```java
     public class PointTransaction {
 
     private PointDao pointDao;
@@ -38,7 +39,7 @@
           });
       }
     }
-    ```
+```
     - PlatformTransactionManager
   2. 선언적 트랜잭션(@Transaction)
     - 트랜잭션 기능이 적용된 프록시 객체가 생성
