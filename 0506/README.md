@@ -102,12 +102,49 @@
 ### Callable 인터페이스
 - Runnable : 스레드 생성 및 실행
   - run 단일메소드, 파라미터 리턴 없음
+```java
+public class MyRunnable implements Runnable {
+    @Override
+    public void run() {
+        System.out.println("Runnable: Doing work...");
+    }
+}
+```
 
 - Callable : 제네릭 사용해 결과 return가능
+```java
+public class MyCallable implements Callable<String> {
+    @Override
+    public String call() throws Exception {
+        System.out.println("Callable: Doing work...");
+        return "Callable Result";
+    }
+}
+```
 
 - Future 
   - Callable은 잔여 쓰레드가 없어 실행 연기 될 수 있음
-  - 미래에 완료된 Callable 반환값을 구하기 위해 사용
+  - 미래에 완료된 Callable 반환값을 구하기 위해 사용(Future.get())
+```java
+public class FutureExample {
+    public static void main(String[] args) throws Exception {
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+
+        // Callable 작업 제출
+        Future<String> future = executorService.submit(new MyCallable());
+
+        // 작업의 완료 여부를 확인하고 결과를 가져옴
+        if (!future.isDone()) {
+            System.out.println("Task is not done yet...");
+        }
+
+        String result = future.get(); // 작업이 완료될 때까지 대기 후 결과 반환
+        System.out.println("Result from Callable: " + result);
+
+        executorService.shutdown();
+    }
+}
+```
 
 - Excecutor : 쓰레드 풀 구현 중 일부
   - 등록된 작업(Runnable)을 실행하기 위한 인터페이스
@@ -124,10 +161,49 @@
       - 주어진 작업들을 동시에 모두 실행하고, 전부 끝나면 각각의 상태와 결과를 갖는 List을 반환
       - 모든 결과가 나올 때까지 대기하는 Blocking 방식
       - 최대 쓰레드 풀의 크기만큼 작업을 동시에 실행
+```java
+public class ExecutorServiceExample {
+    public static void main(String[] args) throws Exception {
+        ExecutorService executorService = Executors.newFixedThreadPool(3); // 최대 3개의 스레드 풀 생성
+
+        List<Callable<String>> tasks = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            int taskNumber = i + 1;
+            tasks.add(() -> {
+                return "Task " + taskNumber + " result";
+            });
+        }
+
+        List<Future<String>> results = executorService.invokeAll(tasks); // 모든 작업 실행 후 결과 목록 반환
+
+        for (Future<String> result : results) {
+            System.out.println("Result: " + result.get()); // 각 작업의 결과 가져오기 (Blocking)
+        }
+
+        executorService.shutdown();
+    }
+}
+```
 
 - Executors
   - Executor, ExecutorService를 구현한 쓰레드 풀을 손쉽게 생성
   - 쓰레드의 개수 및 종류 설정 가능
+```java
+public class ExecutorsExample {
+    public static void main(String[] args) throws Exception {
+        ExecutorService executorService = Executors.newFixedThreadPool(2);
+
+        // Runnable 작업 제출
+        executorService.submit(new MyRunnable());
+
+        // Callable 작업 제출
+        Future<String> future = executorService.submit(new MyCallable());
+        System.out.println("Callable Result: " + future.get());
+
+        executorService.shutdown();
+    }
+}
+```
 
 ### 동시성관리 Java
 1. volatile 
