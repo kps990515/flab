@@ -51,9 +51,14 @@
   2. Red-Black Tree : LinkedList 방식으로 충돌된 객체들을 관리하다가, 임계점을 넘으면 Red-Black Tree 방식으로 객체들을 저장
 
 ### [Persist VS Merge](https://umanking.github.io/2019/04/12/jpa-persist-merge/)
-- persist : 새로운 엔티티를 영속성 컨텍스트(Persistence Context)에 추가하고 데이터베이스에 저장
-- merge : 준영속 상태(detached state)나 새로운 엔티티를 영속성 컨텍스트에 병합하여 데이터베이스에 저장하거나 업데이트
-  - persist -> detach -> persist상태
+- persist : 새로운 엔티티를 영속상태로 만들어 DB에 추가할때 사용
+  - 영속성 컨텍스트에 데이터가 없을때 사용
+  - persist시 영속성 컨텍스트에서 관리하고, 트랜잭션 커밋시 Insert 	
+- merge : '준영속' 상태의 엔티티를 영속성 컨텍스트로 다시 가져와 수정할 때 사용
+  - 준영속상태(영속성 컨텍스트에서 관리되다가 관리안되는 상태) detach, transaction close등으로
+  - 준영속상태 엔티티를 영속석 컨텍스트로 다시 가져와 수정할 때 사용
+  - 전달된 엔티티의 복사본을 새롭게 생성해 영속성컨텍스트에 저장함
+  - 원본엔티티는 영속 상태가 아니며 반환된 엔티티만 영속상태가 됨
 
 ### [JPA Save시 select발생](https://chatgpt.com/c/2a75afd0-1a4f-4cbb-8a91-7f7b34a74fb8)
 - ID가 AutoIncrement가 아닌경우 해당 ID가 중복인지 확인하기 위해 select발생
