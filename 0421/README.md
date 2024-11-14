@@ -37,7 +37,7 @@
               } 
           });
       }
-  }
+    }
     ```
     - PlatformTransactionManager
   2. 선언적 트랜잭션(@Transaction)
