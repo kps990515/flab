@@ -75,7 +75,7 @@
    - 해결방법
     1. 메소드 접근 제어자 변경
     2. 내부 호출 대신 외부 빈 주입 사용(Ex. TransactionHandler)
-    ```java
+```java
     @Service
     public class UserService {
 
@@ -109,7 +109,7 @@
             return supplier.get();
         }
     }
-    ```
+```
 
 ### [AOP](https://velog.io/@ann0905/AOP%EC%99%80-Transactional%EC%9D%98-%EB%8F%99%EC%9E%91-%EC%9B%90%EB%A6%AC)
  - AOP의 주요 개념
