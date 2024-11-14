@@ -209,16 +209,49 @@ public class ExecutorsExample {
 1. volatile 
   - 변수를 메인 메모리에 저장
   - 모든 스레드가 변수의 최신 값을 볼 수 있도록 보장
-  - 복합 작업(증가 연산 등)에서는 원자성을 보장하지 않음
+  - 복합 작업(증가 연산 등)에서는 원자성을 보장하지 않음 -> 여러쓰레드가 하나에 변수에 write할수있기때문
+```java
+public class SharedObject {
+    public volatile int counter = 0;
+}
+```
 
 2. synchronized
   - 메소드나 코드 블록에 사용되어, 한 시점에 하나의 스레드만 해당 코드 영역을 실행
   - 무거운잠금(OS가 스레드 동기화 관리 - Context Switch오버헤드 큼)
+  - 자동으로 Lock이 잠기고 풀림
+```java
+public synchronized void add(int value) {
+    count += value;
+}
+```
 
 3. Atomic
   - CAS(Compare-And-Swap) 연산
   - 가벼운잠금(CPU의 원자적 연산을 통해 데이터를 동기화 - 빠름, 락프리)
+```java
+import java.util.concurrent.atomic.AtomicInteger;
 
+AtomicInteger count = new AtomicInteger(0);
+count.incrementAndGet(); // 원자적으로 증가
+```
+
+4. ReentrantLock
+ - 수동으로 lock 관리(lock(), unlock(), isLocked(), tryLock())
+ - 공정한 락 제공 : public ReentrantLock(boolean fair)을 줌으로서 가장 오래대기한 스레드에 락을 점유할수있게
+ - tryLock()을 통해 락 획득 대기시간 지정 가능
+ - synchronized보다 유연하게 잠금을 관리
+
+```java
+Lock lock = new ReentrantLock();
+try {
+    lock.lock();
+    // 임계 영역
+} finally {
+    lock.unlock();
+}
+```
+   
 ### RaceCondition
 - 멀티스레딩 또는 멀티프로세스 환경에서 자원에 동시에 접근하려고 할 때 발생하는 문제
 - 해결법
