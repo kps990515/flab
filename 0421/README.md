@@ -224,3 +224,7 @@
 
 
 ### [JPA에서 Entity에 protected 생성자를 만드는 이유](https://velog.io/@jyyoun1022/JPA-JPA%EC%97%90%EC%84%9C-Entity%EC%97%90-protected-%EC%83%9D%EC%84%B1%EC%9E%90%EB%A5%BC-%EB%A7%8C%EB%93%9C%EB%8A%94-%EC%9D%B4%EC%9C%A0)
+- 엔티티는 필수적으로 기본생성자(매개변수가 없는 생성자)가 필요
+- 그 이유는 JPA가 내부적으로 Reflection을 사용하기 때문
+- Reflection은 매개변수가 있는 생성자를 호출하는 데는 제한이 있음
+- 기본생성자는 만들어야 하지만 외부에서 무분별한 생성은 막기 위해 protected로 선언함
