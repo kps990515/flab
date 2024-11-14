@@ -90,12 +90,12 @@ public class ReservedSeat implements Persistable<String> { // Persistable 인터
 
 	@Override // // Persistable 인터페이스를 오버라이딩
 	public boolean isNew() {
-		return isNew;
+	   return isNew;
 	}
 
 	@PostPersist // 영속상태가 된 후 false로 바꿔줌
 	@PostLoad // 영속성 컨텍스트에서 조회가 되면 false로 바꿔줌
-  @PostUpdate // 영속성 컨텍스트에서 업데이트 된 후 false로 바꿔줌
+        @PostUpdate // 영속성 컨텍스트에서 업데이트 된 후 false로 바꿔줌
 	void markNotNew() {
 		this.isNew = false;
 	}
