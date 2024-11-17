@@ -244,6 +244,35 @@ public class Main {
     };
   ```
 
+```java
+public class Main {
+    public static void main(String[] args) {
+        // 계산할 두 수
+        int num1 = 20;
+        int num2 = 10;
+
+        // Calculator 클래스 생성하며 계산 할 수를 클래스 필드에 저장
+        Calculator calculator = new Calculator(num1, num2);
+
+        // operate() 추상 메소드를 더하기 연산이 되도록 재정의한 익명 구현 객체
+        Operate operate = (a, b) -> a + b;
+        
+        // calculator.caculate() 매서드에 람다식을 넣음
+        int result = calculator.caculate(operate);
+
+        System.out.println(result); // 30
+
+
+		// 아니면 람다식 자체를 메소드 인자로 바로 넘겨줄 수 도 있다.
+        int result2 = calculator.caculate((a, b) -> {
+            return a - b;
+        });
+
+        System.out.println(result2); // 10
+    }
+}
+```
+
 ### [Java InnerClass](https://inpa.tistory.com/entry/JAVA-%E2%98%95-%EB%82%B4%EB%B6%80-%ED%81%B4%EB%9E%98%EC%8A%A4Inner-Class-%EC%9E%A5%EC%A0%90-%EC%A2%85%EB%A5%98)
 - 클래스 내부에 선언된 또 다른 클래스
 - 보통 두 클래스가 서로 긴밀한 관계가 있거나, 하나의 클래스또는 메소드에서만 사용되는 클래스일 때 이용되는 기법
