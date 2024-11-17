@@ -135,7 +135,37 @@ public class Main {
     }
     ```
 
-  - 인터페이스 익명 구현 객체
+  - 인터페이스 익명 구현 객체(실무)
+```java
+// 인터페이스
+interface IAnimal {
+    public String bark(); // 추상 메소드
+    public String run();
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // 인터페이스 익명 구현 객체 생성
+        IAnimal dog = new IAnimal() {
+            @Override
+            public String bark() {
+                return "개가 짖습니다";
+            }
+            
+            @Override
+            public String run() {
+                return "개가 달립니다";
+            }
+        };
+        
+        // 인터페이스 구현 객체 사용
+        dog.bark();
+        dog.run();
+    }
+}
+```
+
+- 익명구현 객체 활용(메소드의 아규먼트로 일회성 객체를 넘겨주는 방법으로 자주 애용)
   ```java
   // 연산식을 추상화한 인터페이스
   interface Operate {
