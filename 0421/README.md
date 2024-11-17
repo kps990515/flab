@@ -170,6 +170,49 @@
   }
   ```
 
+실무예제 : 로깅
+1. 커스텀 어노테이션
+```java
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface LogExecutionTime {
+}
+```
+
+2. Aspect 클래스
+   - joinPoint.proceed() : 해당 어노테이션이 적용된 함수나 클래스 실행하는 시점
+```java
+@Aspect
+@Component
+public class LoggingAspect {
+    @Around("@annotation(LogExecutionTime)")
+    public Object logExecutionTime(ProceedingJoinPoint joinPoint) throws Throwable {
+        long start = System.currentTimeMillis();
+
+        // 메서드 실행
+        Object proceed = joinPoint.proceed();
+
+        long executionTime = System.currentTimeMillis() - start;
+        System.out.println(joinPoint.getSignature() + " executed in " + executionTime + "ms");
+
+        return proceed;
+    }
+}
+```
+
+3. 어노테이션 적용
+```java
+@Service
+public class SampleService {
+    @LogExecutionTime // joinPoint.proceed() 실행되면 실행
+    public void serve() throws InterruptedException {
+        Thread.sleep(2000); // 예제용으로 2초 대기
+        System.out.println("Service is running");
+    }
+}
+```   
+
+
  - @Transaction Proxy
   1. private은 트랜잭션 처리 불가능
   2. 트랜잭션은 객체 외부에서 처음 진입하는 메서드를 기준으로 동작
