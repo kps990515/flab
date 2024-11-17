@@ -51,8 +51,28 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
             "SELECT u FROM UserEntity u WHERE u.score >= :min AND u.score <= :max"
     )
     public List<UserEntity> score(@Param("min") int min, @Param("max") int max);
+}
+```
 
-    //QUERY DSL
+### UserRepository(Query Dsl)
+```java
+public interface UserRepository extends JpaRepository<UserEntity, Long>, UserRepositoryCustom {
+}
+
+public interface UserRepositoryCustom {
+    List<UserEntity> score(int min, int max);
+}
+
+@Repository
+public class UserRepositoryCustomImpl implements UserRepositoryCustom {
+
+    private final JPAQueryFactory queryFactory;
+
+    // JPAQueryFactory 주입
+    public UserRepositoryCustomImpl(JPAQueryFactory queryFactory) {
+        this.queryFactory = queryFactory;
+    }
+
     @Override
     public List<UserEntity> score(int min, int max) {
         QUserEntity user = QUserEntity.userEntity;
