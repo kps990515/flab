@@ -284,10 +284,8 @@ public class Main {
 
 - 종류
   1. 인스턴스 클래스 : static멤버 선언 불가
-  2. 스태틱 클래스 : 외부클래스 생성없이도 생성 가능(메모리에 올라가는것은 아님)
+  2. Static 클래스 : 외부 클래스 초기화없이 내부 Static생성 / 초기화를 할때마다 다른 객체가 만들어짐
   3. 지역 클래스 : 메소드 내부에서만 한정적으로 사용
-  4. 익명 클래스
-
   ```java
   class Outer{
     class InstanceInner { ... } // 인스턴스 클래스
@@ -298,3 +296,22 @@ public class Main {
       }
   }
   ```
+  4. 익명 클래스
+```java
+public class Main {
+    public static void main(String[] args) {
+	// Object 클래스를 일회성으로 익명 클래스로 선언하여 변수 o 에 저장
+	Object o = new Object() {
+	    @Override
+	    public String toString() {
+		return "내 마음대로 toString 바꿔보리기 ~";
+	    }
+	};
+		
+	// 익명 클래스의 객체의 오버라이딩한 메서드를 사용
+	String txt = o.toString();
+	System.out.println(txt); // 내 마음대로 toString 바꿔보리기 ~
+    }
+}
+```
+
