@@ -44,18 +44,23 @@
 - Map 데이터를 Node객체(hash, key, value, next)로 만들어서 관리
 - Node배열을 Table이라는 이름으로 관리
 
-- 제약조건
-  1. hasing의 결과는 정수
-  2. hasing의 결과는 배열의 크기를 넘어서면 안 된다.
+- 동작원리
+  1. 데이터저장 : Key -> Hash(Key) -> 저장 -> 키 충돌(키 중복)이면 LinkedList 혹은 Red-Black Tree로 저장
+  2. 데이터 검색 : Key -> Hash(Key) -> 조회
+
+- 키의 충돌 해결
+  1. threshold : 테이블의 크기를 늘릴 임계점 설정(16 -> 임계점 넘으면 2배로 늘림 -> 복사 저장)
+  2. LinkedList : 같은 인덱스에 여러 데이터를 저장하는 경우 LinkedList로 전환
+  3. Red-Black Tree : LinkedList 방식으로 충돌된 객체들을 관리하다가, 임계점을 넘으면 Red-Black Tree 방식으로 객체들을 저장
 
 - 시간복잡도 
   - key 인덱스 : O(1)
   - LinkedList : O(n)
   - Red-Black Tree : O(log n)
 
-- 키의 충돌 해결
-  1. threshold : 테이블의 크기를 늘릴 임계점 설정
-  2. Red-Black Tree : LinkedList 방식으로 충돌된 객체들을 관리하다가, 임계점을 넘으면 Red-Black Tree 방식으로 객체들을 저장
+- 제약조건
+  1. hasing의 결과는 정수
+  2. hasing의 결과는 배열의 크기를 넘어서면 안 된다.
 
 ### [Persist VS Merge](https://umanking.github.io/2019/04/12/jpa-persist-merge/)
 - persist : 새로운 엔티티를 영속상태로 만들어 DB에 추가할때 사용
