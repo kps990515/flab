@@ -2,11 +2,18 @@
 
 ### [CORS](https://escapefromcoding.tistory.com/724)
 - Cross Origin Resource Sharing
+- 클라이언트와 서버가 서로 다른 도메인에 있을 때 발생하는 보안 문제
 - 출처가 다른 자원들을 공유
 - 출처 : Protocol + Host + port 
   - https:// : 프로토콜
   - github.com : 호스트
   - 8801 : 포트
+ 
+- 해결법
+  1. 서버에서 CORS 설정 추가 : @CrossOrigin, WebMvcConfigurer를 통해 특정 출처(origin)만 허용
+  2. HTTP 헤더 설정 : 응답 헤더에 Access-Control-Allow-Origin을 설정하여 요청을 허용(method, Header단위도 가능)
+  3. 프록시 서버 사용 : 클라이언트와 백엔드 사이에 프록시 서버를 배치하여 동일한 도메인에서 요청으로 처리
+  4. 사전 요청(Preflight Request) 허용 : 브라우저가 OPTIONS 메서드로 서버에 미리 요청을 보내어, 서버가 CORS를 허용하는지 확인하는 과정
 
 - 사용이유 : 한 출처에서 다른 출처 접근을 제어하기 위해서
 - CORS 정책 3가지
