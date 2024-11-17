@@ -58,6 +58,7 @@ class Animal {
 
 public class Main {
     public static void main(String[] args) {
+        // 익명 클래스 : 클래스 정의와 객체화를 동시에. 일회성으로 사용
         Animal dog = new Animal() {
             // @Override 메소드
             public String bark() {
@@ -68,7 +69,7 @@ public class Main {
             public String run() {
                 return "달리기 ㄱㄱ싱";
             }
-        };
+        }; // 익명클래스 끝에는 세미콜론 필요
         
         dog.bark();
         dog.run(); // ! Error - 외부에서 호출 불가능
