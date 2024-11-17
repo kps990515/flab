@@ -1,4 +1,6 @@
 ## ObjectMapper 직렬화 역직렬화
+- 직렬화 : 객체를 바이트 스트림으로 변환하는 과정
+- 역직렬화 : 바이트 스트림으로 변환된 데이터를 다시 객체로 복원하는 과정
 
 ```java
 class ChapterFirstApplicationTests {
